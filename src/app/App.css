@@ -1,0 +1,19 @@
+.App {
+    height: 100%;
+    background-color: #F0F1F5;
+}
+
+
+.moviebase-greeting-block {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    z-index: 2;
+
+    background-color: #DDE8FB;
+}
