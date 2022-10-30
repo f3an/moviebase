@@ -3,10 +3,11 @@
   height: 50px;
 
   position: sticky;
+  z-index: 3;
   top: 0;
 
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 
   background-color: #3983ac;
@@ -24,4 +25,15 @@
   width: 40px;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.moviebase-navigation-block {
+  padding: 5px;
+  margin: 0;
+
+  width: 50%;
+  height: 80%;
+
+  display: flex;
+  align-items: center;
 }

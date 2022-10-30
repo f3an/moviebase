@@ -7,50 +7,76 @@ import { auth } from '../../../firebaseConfig'
 import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import KeyIcon from '@mui/icons-material/Key'
-import { useGenres } from '../../hooks/useGenres'
+import GanresModal from '../ganres-modal/GanresModal'
 
-function Header (): JSX.Element {
-  interface User { email: string }
-  const [user, setUser] = useState<User>()
+function Header(): JSX.Element {
+    const [isOpen, setIsOpen] = useState(false)
+    const toggle = () => {
+        isOpen ? setIsOpen(false) : setIsOpen(true)
+    }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [genres, isLoading, Error] = useGenres()
+    interface User {
+        email: string
+    }
 
-  onAuthStateChanged(auth, (currentUser: any) => {
-    setUser(currentUser)
-  })
+    const [user, setUser] = useState<User>()
 
-  return (
-    <Box className="moviebase-header">
-      <Box className="moviebase-logo" onMouseDown={e => { e.preventDefault() }}>
-        <img src={headerLogo} alt="header-logo" className='header-logo' onContextMenu={e => e.preventDefault()} />
-        <Link to="/" style={{ textDecoration: 'none', color: '#e2f1ff' }}><Typography>Moviebase</Typography></Link>
-      </Box>
-      <Box className="moviebase-navigation-block">
+    onAuthStateChanged(auth, (currentUser: any) => {
+        setUser(currentUser)
+    })
 
-      </Box>
-      <Box className="moviebase-user-block">
-
-        {user !== null
-          ? (
-              <Link to="/account" style={{ textDecoration: 'none', color: 'white' }}><Typography>{user?.email}</Typography></Link>
-            )
-          : (
-              <Link to="/account/authorization" style={{ textDecoration: 'none', color: 'white' }}>
-                <Button
-                  variant="contained"
-                  color='primary'
-                  className='header-authorization-button'
-                  endIcon={<KeyIcon />}
-                  style={{ backgroundColor: '#f0f0' }}
-                >
-                  Authorization
-                </Button>
-              </Link>
-            )}
-      </Box>
-    </Box>
-  )
+    return (
+        <Box className='moviebase-header'>
+            <Box
+                className='moviebase-logo'
+                onDragStart={(e) => {
+                    e.preventDefault()
+                }}
+            >
+                <Link to='/' style={{ textDecoration: 'none' }}>
+                    <img
+                        src={headerLogo}
+                        alt='header-logo'
+                        className='header-logo'
+                        onContextMenu={(e) => e.preventDefault()}
+                    />
+                </Link>
+                <Link to='/' style={{ textDecoration: 'none', color: '#e2f1ff' }}>
+                    <Typography>Moviebase</Typography>
+                </Link>
+            </Box>
+            <Box
+                className='moviebase-navigation-block'
+            >
+                <div onMouseEnter={toggle} onMouseLeave={toggle} style={{ padding: '5px', cursor:'pointer' }}>
+                    Ganres
+                    <GanresModal isOpen={isOpen}/>
+                </div>
+            </Box>
+            <Box className='moviebase-user-block'>
+                {user !== null ? (
+                    <Link to='/account' style={{ textDecoration: 'none', color: 'white' }}>
+                        <Typography>{user?.email}</Typography>
+                    </Link>
+                ) : (
+                    <Link
+                        to='/account/authorization'
+                        style={{ textDecoration: 'none', color: 'white' }}
+                    >
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            className='header-authorization-button'
+                            endIcon={<KeyIcon />}
+                            style={{ backgroundColor: '#f0f0' }}
+                        >
+                            Authorization
+                        </Button>
+                    </Link>
+                )}
+            </Box>
+        </Box>
+    )
 }
 
 export default Header

@@ -22,22 +22,22 @@ interface filmData {
 }
 
 function Main (props: any): JSX.Element {
-  // eslint-disable-next-line prefer-const
-  let page = 1
-  const [films, isLoading] = useFilmsList(page, props.isFirstTimeOpen)
+  
+    const page = 1
+    const [films, isLoading] = useFilmsList(page, props.isFirstTimeOpen)
 
-  return (
-    <Container className="moviebase-app" style={{ display: 'flex', flexWrap: 'wrap' }}>
-      {isLoading
-        ? 'loading'
-        : films.map((data: filmData, key = 0) => {
-          return (
-            <Card filmData={data} key={key} />
-          )
-        })
-      }
-    </Container>
-  )
+    return (
+        <Container className="moviebase-app" style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {isLoading
+                ? 'loading'
+                : films.map((data: filmData, key = 0) => {
+                    return (
+                        <Card filmData={data} key={key} />
+                    )
+                })
+            }
+        </Container>
+    )
 }
 
 export default Main

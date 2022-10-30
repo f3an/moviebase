@@ -2,7 +2,7 @@ import React from 'react'
 import './animatedLogo.css'
 
 export const MoviebaseAnimatedLogo = (): JSX.Element => {
-  return (
+    return (
         <div className='animated-logo-block'>
             <div className="logo-block">
                 <div className='logo-outfit'>
@@ -22,5 +22,5 @@ export const MoviebaseAnimatedLogo = (): JSX.Element => {
                 <span className='big-logo-block-text'>Moviebase</span>
             </div>
         </div>
-  )
+    )
 }

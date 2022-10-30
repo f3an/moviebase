@@ -11,39 +11,39 @@ interface User {
 }
 
 function Account (): JSX.Element {
-  const [user, setUser] = useState<User>()
-  const navigate = useNavigate()
-  onAuthStateChanged(auth, (currentUser: any): void => {
-    setUser(currentUser)
-  })
+    const [user, setUser] = useState<User>()
+    const navigate = useNavigate()
+    onAuthStateChanged(auth, (currentUser: any): void => {
+        setUser(currentUser)
+    })
 
-  const logout = async (): Promise<void> => {
-    await signOut(auth)
-    navigate('/')
-  }
-  return (
-    <Box className="moviebase-account-block" display={'flex'}>
-      {user !== null
-        ? (
-            <>
-              <Typography>user logged in: {user?.email}</Typography>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  void logout()
-                }}
-              >
+    const logout = async (): Promise<void> => {
+        await signOut(auth)
+        navigate('/')
+    }
+    return (
+        <Box className="moviebase-account-block" display={'flex'}>
+            {user !== null
+                ? (
+                    <>
+                        <Typography>user logged in: {user?.email}</Typography>
+                        <Button
+                            variant="contained"
+                            onClick={() => {
+                                void logout()
+                            }}
+                        >
                 Logout
-              </Button>
-            </>
-          )
-        : (
-            <Button variant="outlined" href="account/authorization">
+                        </Button>
+                    </>
+                )
+                : (
+                    <Button variant="outlined" href="account/authorization">
               Authorization
-            </Button>
-          )}
-    </Box>
-  )
+                    </Button>
+                )}
+        </Box>
+    )
 }
 
 export default Account

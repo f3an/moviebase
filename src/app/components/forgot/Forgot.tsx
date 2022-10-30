@@ -8,20 +8,20 @@ import { sendPasswordResetEmail } from 'firebase/auth'
 import ErrorIcon from '@mui/icons-material/Error'
 
 function Forgot (): JSX.Element {
-  const [userEmail, setUserEmail] = useState<string>('')
-  const [resetPasswordError, setResetPasswordError] = useState<string>('')
-  const navigate = useNavigate()
+    const [userEmail, setUserEmail] = useState<string>('')
+    const [resetPasswordError, setResetPasswordError] = useState<string>('')
+    const navigate = useNavigate()
 
-  const resetPassword = async (): Promise<void> => {
-    try {
-      await sendPasswordResetEmail(auth, userEmail)
-      navigate('/')
-    } catch (error) {
-      setResetPasswordError('Invalid Email')
+    const resetPassword = async (): Promise<void> => {
+        try {
+            await sendPasswordResetEmail(auth, userEmail)
+            navigate('/')
+        } catch (error) {
+            setResetPasswordError('Invalid Email')
+        }
     }
-  }
 
-  return (
+    return (
         <Box className='moviebase-fogot-password-block'>
             <TextField
                 label='Email'
@@ -33,20 +33,20 @@ function Forgot (): JSX.Element {
                 className='fogot-password-email-input'
             />
             {(resetPasswordError !== '')
-              ? (<Box color={'red'} style={{ display: 'flex', alignItems: 'center', margin: '10px', marginBottom: '0px' }} >
+                ? (<Box color={'red'} style={{ display: 'flex', alignItems: 'center', margin: '10px', marginBottom: '0px' }} >
                     <ErrorIcon />
                     <Typography>{resetPasswordError}</Typography>
                 </Box>)
-              : ''}
+                : ''}
             <Button
-              variant="contained"
-              onClick={() => {
-                void resetPassword()
-              }}
-              style={{ margin: '10px' }}
+                variant="contained"
+                onClick={() => {
+                    void resetPassword()
+                }}
+                style={{ margin: '10px' }}
             >Reset Password</Button>
         </Box>
-  )
+    )
 }
 
 export default Forgot

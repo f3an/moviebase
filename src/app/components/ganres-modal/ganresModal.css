@@ -1,0 +1,12 @@
+.ganres-modal-block {
+    width: 400px;
+    height: 100px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid cadetblue;
+    background-color: #fff;
+    color: black;
+    z-index: 4;
+    position: absolute;
+    top: 35px;
+}
