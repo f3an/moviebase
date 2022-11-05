@@ -4,6 +4,8 @@ import {
     createUserWithEmailAndPassword,
     sendEmailVerification,
     signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup
 } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
 import Button from '@mui/material/Button'
@@ -47,6 +49,16 @@ function Authorization(): JSX.Element {
             navigate('/')
         } catch (error: any) {
             setAuthorizationError('Incorrect username or password')
+        }
+    }
+
+    const signInWithGoogleAuth = async () => {
+        try {
+            const provider = new GoogleAuthProvider ();
+            navigate('/')
+            return signInWithPopup(auth, provider);
+        } catch (error) {
+            setAuthorizationError('Error')
         }
     }
 
@@ -159,6 +171,16 @@ function Authorization(): JSX.Element {
                         >
                             <Typography>Forgot Password ?</Typography>
                         </Link>
+                        <Button
+                            variant='contained'
+                            onClick={() => {
+                                signInWithGoogleAuth()
+                            }}
+                            className='card-login-button'
+                            style={{ margin: '10px' }}
+                        >
+                            Login With Google
+                        </Button>
                     </Box>
                 )}
                 {authorizationError !== '' ? (

@@ -1,9 +1,9 @@
-import { Container } from '@mui/system'
 import React, { useEffect } from 'react'
-import { useFilmListByGenre } from '../../hooks/useFilmListByGenre'
-import { useDispatch, useSelector } from 'react-redux'
-import { changePage, selectGenreIdValue, selectPage } from '../../taskReducerSlice'
+import { Container } from '@mui/system'
+import { usePopular } from '../../hooks/usePopular'
 import Card from '../card/Card'
+import { useDispatch, useSelector } from 'react-redux'
+import { changePage, selectPage } from '../../taskReducerSlice'
 import { Box, IconButton } from '@mui/material'
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 
@@ -24,17 +24,16 @@ interface filmData {
     vote_count: number
 }
 
-function FilmListByGenre(): JSX.Element {
-    const genreID = useSelector(selectGenreIdValue)
+function Popular(): JSX.Element {
     const page = useSelector(selectPage)
+    const [films, isLoading] = usePopular(page)
     const dispatch = useDispatch()
-    const [filmListByGenre, isLoading] = useFilmListByGenre(genreID, page)
 
     useEffect(() => {
         if (page !== 1) {
             dispatch(changePage(1))
         }
-    }, [genreID])
+    }, [])
 
     return (
         <Container className='moviebase-app' style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -71,7 +70,7 @@ function FilmListByGenre(): JSX.Element {
 
             {isLoading
                 ? 'loading'
-                : filmListByGenre.map((data: filmData, key = 0) => {
+                : films.map((data: filmData, key = 0) => {
                     return <Card filmData={data} key={key} />
                 })}
 
@@ -109,4 +108,4 @@ function FilmListByGenre(): JSX.Element {
     )
 }
 
-export default FilmListByGenre
+export default Popular

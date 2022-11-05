@@ -4,6 +4,7 @@ import store from './store.js'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/header/Header'
+import Footer from './components/footer/Footer'
 import Registeration from './components/authorization/Authorization'
 import Main from './components/main/Main'
 import Account from './components/account/Account'
@@ -11,6 +12,8 @@ import Forgot from './components/forgot/Forgot'
 import { MoviebaseAnimatedLogo } from './components/animated-logo/AnimatedLogo'
 import Film from './components/film/Film'
 import FilmListByGenre from './components/film-list-by-genre/FilmListByGenre'
+import Popular from './components/popular/Popular'
+
 
 function App(): JSX.Element {
     const [isFirstTimeOpen, setIsFirstTimeOpen] = useState(true)
@@ -24,25 +27,30 @@ function App(): JSX.Element {
 
     return (
         <Provider store={store}>
-            <div className='App'>
+            <div
+                className='App'
+            >
                 <BrowserRouter>
                     {isFirstTimeOpen ? (
                         <div className='moviebase-greeting-block'>
                             <MoviebaseAnimatedLogo />
                         </div>
                     ) : (
-                        ''
+                        <></>
                     )}
                     <Header></Header>
 
                     <Routes>
                         <Route path='/' element={<Main isFirstTimeOpen={isFirstTimeOpen} />} />
+                        <Route path='/popular' element={<Popular />} />
                         <Route path='/film/:movie' element={<Film />} />
                         <Route path='/genres/:genre' element={<FilmListByGenre />} />
                         <Route path='/account' element={<Account />} />
                         <Route path='/account/authorization' element={<Registeration />} />
                         <Route path='/account/authorization/forgot' element={<Forgot />} />
                     </Routes>
+
+                    <Footer></Footer>
                 </BrowserRouter>
             </div>
         </Provider>

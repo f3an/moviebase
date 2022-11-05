@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './header.css'
 import headerLogo from '../../assets/header-logo.jpg'
+import Search from '../search/search'
 import { Box, Typography } from '@mui/material'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
@@ -9,14 +10,14 @@ import Button from '@mui/material/Button'
 import KeyIcon from '@mui/icons-material/Key'
 import GanresModal from '../ganres-modal/GanresModal'
 
+interface User {
+    email: string
+}
+
 function Header(): JSX.Element {
     const [isOpen, setIsOpen] = useState(false)
     const toggle = () => {
         isOpen ? setIsOpen(false) : setIsOpen(true)
-    }
-
-    interface User {
-        email: string
     }
 
     const [user, setUser] = useState<User>()
@@ -45,13 +46,21 @@ function Header(): JSX.Element {
                     <Typography>Moviebase</Typography>
                 </Link>
             </Box>
-            <Box
-                className='moviebase-navigation-block'
-            >
-                <div onMouseEnter={toggle} onMouseLeave={toggle} style={{ padding: '5px', cursor:'pointer' }}>
-                    Ganres
-                    <GanresModal isOpen={isOpen}/>
+            <Box className='moviebase-navigation-block'>
+                <div>
+                    <Link to='/popular' style={{ textDecoration: 'none', color: '#e2f1ff' }}>
+                        Popular
+                    </Link>
                 </div>
+                <div
+                    onMouseEnter={toggle}
+                    onMouseLeave={toggle}
+                    style={{ padding: '5px', cursor: 'pointer' }}
+                >
+                    Ganres
+                    <GanresModal isOpen={isOpen} />
+                </div>
+                <Search />
             </Box>
             <Box className='moviebase-user-block'>
                 {user !== null ? (

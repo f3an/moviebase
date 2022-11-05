@@ -3,17 +3,27 @@ import { createSlice } from '@reduxjs/toolkit'
 export const taskReducerSlice = createSlice({
     name: 'store',
     initialState: {
-        value: '',
+        genreIdValue: '',
+        movieIdValue: 0,
+        page: 1
     },
     reducers: {
-        changeValue: (state, data) => {
-            state.value = data.payload
+        changeGenreIdValue: (state, data) => {
+            state.genreIdValue = data.payload
         },
+        changeMovieIdValue: (state, data) => {
+            state.movieIdValue = data.payload
+        },
+        changePage: (state, data) => {
+            state.page = data.payload
+        }
     },
 })
 
-export const { changeValue } = taskReducerSlice.actions
+export const { changeGenreIdValue, changeMovieIdValue, changePage } = taskReducerSlice.actions
 
-export const selectValue = (state) => state.taskReducer.value
+export const selectGenreIdValue = (state) => state.taskReducer.genreIdValue
+export const selectMovieIdValue = (state) => state.taskReducer.movieIdValue
+export const selectPage = (state) => state.taskReducer.page
 
 export default taskReducerSlice.reducer

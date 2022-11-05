@@ -1,7 +1,27 @@
 .moviebase-app {
-  padding-top: 20px;
+  padding: 10px;
   height: 100%;
-
   background-color: #fff;
   justify-content: space-evenly;
+  border-radius: 10px;
+}
+
+.slider {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+}
+
+.slider::-webkit-scrollbar {
+  --webkit-appearance: none;
+}
+
+.slider::-webkit-scrollbar:horizontal {
+  height: 11px;
+}
+
+.slider::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 2px solid white;
+  background-color: rgba(0, 0, 0, .5);
 }
