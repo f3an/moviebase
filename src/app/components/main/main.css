@@ -4,6 +4,7 @@
   background-color: #fff;
   justify-content: space-evenly;
   border-radius: 10px;
+  /* display: 'flex', flexWrap: 'wrap' */
 }
 
 .slider {

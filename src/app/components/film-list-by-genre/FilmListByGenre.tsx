@@ -2,10 +2,17 @@ import { Container } from '@mui/system'
 import React, { useEffect } from 'react'
 import { useFilmListByGenre } from '../../hooks/useFilmListByGenre'
 import { useDispatch, useSelector } from 'react-redux'
-import { changePage, selectGenreIdValue, selectPage } from '../../taskReducerSlice'
+import {
+    changeGenre,
+    changePage,
+    selectGenre,
+    selectGenreIdValue,
+    selectPage,
+} from '../../taskReducerSlice'
 import Card from '../card/Card'
 import { Box, IconButton } from '@mui/material'
-import { ArrowBack, ArrowForward } from '@mui/icons-material'
+import { ArrowBack, ArrowForward, KeyboardTab } from '@mui/icons-material'
+import { useNavigate, useParams } from 'react-router-dom'
 
 interface filmData {
     adult: boolean
@@ -25,16 +32,19 @@ interface filmData {
 }
 
 function FilmListByGenre(): JSX.Element {
-    const genreID = useSelector(selectGenreIdValue)
-    const page = useSelector(selectPage)
     const dispatch = useDispatch()
+    const location = useParams()
+    const navigate = useNavigate()
+    const genreID = useSelector(selectGenreIdValue)
+    const genre = useSelector(selectGenre)
+
+    const page = useSelector(selectPage)
     const [filmListByGenre, isLoading] = useFilmListByGenre(genreID, page)
 
     useEffect(() => {
-        if (page !== 1) {
-            dispatch(changePage(1))
-        }
-    }, [genreID])
+        dispatch(changePage(Number(location.page)))
+        dispatch(changeGenre(location.genre))
+    }, [genreID, page])
 
     return (
         <Container className='moviebase-app' style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -53,6 +63,7 @@ function FilmListByGenre(): JSX.Element {
                     onClick={() => {
                         if (page > 1) {
                             dispatch(changePage(page - 1))
+                            navigate(`/genres/${genre}/${page-1}`)
                         }
                     }}
                 >
@@ -63,6 +74,7 @@ function FilmListByGenre(): JSX.Element {
                     type='button'
                     onClick={() => {
                         dispatch(changePage(page + 1))
+                        navigate(`/genres/${genre}/${page+1}`)
                     }}
                 >
                     <ArrowForward />
@@ -85,11 +97,25 @@ function FilmListByGenre(): JSX.Element {
                     width: '100%',
                 }}
             >
+                {page > 1 ? (
+                    <IconButton
+                        type='button'
+                        onClick={() => {
+                            dispatch(changePage(1))
+                            navigate(`/genres/${genre}/1`)
+                        }}
+                    >
+                        <KeyboardTab sx={{ transform: 'rotate(180deg)' }} />
+                    </IconButton>
+                ) : (
+                    <></>
+                )}
                 <IconButton
                     type='button'
                     onClick={() => {
                         if (page > 1) {
                             dispatch(changePage(page - 1))
+                            navigate(`/genres/${genre}/${page-1}`)
                         }
                     }}
                 >
@@ -99,11 +125,27 @@ function FilmListByGenre(): JSX.Element {
                 <IconButton
                     type='button'
                     onClick={() => {
-                        dispatch(changePage(page + 1))
+                        if (page < 500) {
+                            dispatch(changePage(page + 1))
+                            navigate(`/genres/${genre}/${page+1}`)
+                        }
                     }}
                 >
                     <ArrowForward />
                 </IconButton>
+                {page !== 1 ? (
+                    <IconButton
+                        type='button'
+                        onClick={() => {
+                            dispatch(changePage(500))
+                            navigate(`/genres/${genre}/500`)
+                        }}
+                    >
+                        <KeyboardTab />
+                    </IconButton>
+                ) : (
+                    <></>
+                )}
             </Box>
         </Container>
     )

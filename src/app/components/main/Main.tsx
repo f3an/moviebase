@@ -27,8 +27,9 @@ function Main(props: any): JSX.Element {
     const [films, isLoading] = useFilmsList(page, props.isFirstTimeOpen)
 
     return (
-        <Container className='moviebase-app' style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <Container className='moviebase-app'>
             <Container className='main-block'>
+                <div>{'What\'s Popular'}</div>
                 <Box className='slider'>
                     {isLoading
                         ? 'loading'

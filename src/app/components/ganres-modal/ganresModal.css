@@ -1,12 +1,14 @@
 .ganres-modal-block {
-    width: 400px;
-    height: 100px;
+    width: 420px;
+    height: 150px;
     padding: 10px;
-    border-radius: 10px;
-    border: 2px solid cadetblue;
+    border-radius: 5px;
+    border: 1px solid #2b5f9a;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     background-color: #fff;
     color: black;
     z-index: 4;
     position: absolute;
     top: 35px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }

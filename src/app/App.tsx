@@ -13,6 +13,7 @@ import { MoviebaseAnimatedLogo } from './components/animated-logo/AnimatedLogo'
 import Film from './components/film/Film'
 import FilmListByGenre from './components/film-list-by-genre/FilmListByGenre'
 import Popular from './components/popular/Popular'
+import SearchComponent from './components/search/SearchComponent'
 
 
 function App(): JSX.Element {
@@ -42,9 +43,10 @@ function App(): JSX.Element {
 
                     <Routes>
                         <Route path='/' element={<Main isFirstTimeOpen={isFirstTimeOpen} />} />
-                        <Route path='/popular' element={<Popular />} />
-                        <Route path='/film/:movie' element={<Film />} />
-                        <Route path='/genres/:genre' element={<FilmListByGenre />} />
+                        <Route path='/search/:request' element={<SearchComponent/>} />
+                        <Route path='/popular/:page' element={<Popular />} />
+                        <Route path='/film/:movieId' element={<Film />} />
+                        <Route path='/genres/:genre/:page' element={<FilmListByGenre />} />
                         <Route path='/account' element={<Account />} />
                         <Route path='/account/authorization' element={<Registeration />} />
                         <Route path='/account/authorization/forgot' element={<Forgot />} />

@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 import { useGenres } from '../../hooks/useGenres'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { changeGenreIdValue } from '../../taskReducerSlice'
+import { changeGenre, changeGenreIdValue } from '../../taskReducerSlice'
 
 interface ModalType {
     isOpen: boolean
@@ -27,11 +27,10 @@ function GanresModal(props: ModalType): JSX.Element {
                             listStyle: 'none',
                             display: 'flex',
                             flexWrap: 'wrap',
-                            flexDirection: 'row',
+                            flexDirection: 'column',
                             height: '100%',
-                            width: '100%',
-                            alignContent: 'center',
-                            justifyContent: 'center',
+                            width: '100%',                            
+                            justifyContent: 'flex-start',
                         }}
                     >
                         {!isLoading
@@ -39,9 +38,10 @@ function GanresModal(props: ModalType): JSX.Element {
                                 return (
                                     <li style={{ margin: '1px', cursor: 'pointer', padding: '5px' }} key={key++}>
                                         <Link
-                                            to={`/genres/${element.name.toLowerCase()}`}
+                                            to={`/genres/${element.name.toLowerCase()}/1`}
                                             style={{ textDecoration: 'none', color: '#000' }}
                                             onClick={() => {
+                                                dispatch(changeGenre(element.name))
                                                 dispatch(changeGenreIdValue(element.id))
                                             }}
                                         >

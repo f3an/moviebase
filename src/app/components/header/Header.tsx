@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import './header.css'
 import headerLogo from '../../assets/header-logo.jpg'
-import Search from '../search/search'
-import { Box, Typography } from '@mui/material'
+import { Box, Divider, IconButton, Typography } from '@mui/material'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
 import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import KeyIcon from '@mui/icons-material/Key'
 import GanresModal from '../ganres-modal/GanresModal'
+import SearchIcon from '@mui/icons-material/Search'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeSearchRequest, selectSearchRequest } from '../../taskReducerSlice'
 
 interface User {
     email: string
@@ -25,6 +27,13 @@ function Header(): JSX.Element {
     onAuthStateChanged(auth, (currentUser: any) => {
         setUser(currentUser)
     })
+
+    const dispatch = useDispatch()
+    const searchRequest = useSelector(selectSearchRequest)
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(changeSearchRequest(e.currentTarget.value))
+    }
 
     return (
         <Box className='moviebase-header'>
@@ -47,9 +56,10 @@ function Header(): JSX.Element {
                 </Link>
             </Box>
             <Box className='moviebase-navigation-block'>
+                <Divider sx={{ height: 28, m: 1 }} orientation='vertical' />
                 <div>
-                    <Link to='/popular' style={{ textDecoration: 'none', color: '#e2f1ff' }}>
-                        Popular
+                    <Link to='/popular/1' style={{ textDecoration: 'none', color: '#e2f1ff' }}>
+                        Trending
                     </Link>
                 </div>
                 <div
@@ -57,10 +67,34 @@ function Header(): JSX.Element {
                     onMouseLeave={toggle}
                     style={{ padding: '5px', cursor: 'pointer' }}
                 >
-                    Ganres
+                    Movies
                     <GanresModal isOpen={isOpen} />
                 </div>
-                <Search />
+                <Box
+                    style={{
+                        width: '350px',
+                        height: '40px',
+                        justifySelf: 'flex-end',
+                        marginLeft: 'auto',
+                    }}
+                >
+                    <input
+                        type='text'
+                        placeholder='Search'
+                        className='header-search-input'
+                        onChange={handleChange}
+                    />
+                    <IconButton
+                        type='button'
+                        sx={{ color: '#fff' }}
+                        aria-label='search'
+                        onClick={() => {
+                            console.log(searchRequest)
+                        }}
+                    >
+                        <SearchIcon />
+                    </IconButton>
+                </Box>
             </Box>
             <Box className='moviebase-user-block'>
                 {user !== null ? (

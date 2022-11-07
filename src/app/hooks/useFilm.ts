@@ -8,8 +8,7 @@ export const useFilm = (movieId: number): [any, boolean, string] => {
     useEffect(() => {
         const fetchData = async (): Promise<void> => {
             setIsLoading(true)
-
-            //https://api.themoviedb.org/3/movie/213?api_key=a3bfd889c92149e2d28e3a59f0793a92&language=en-US
+            
             const url = `${process.env.REACT_APP_TMDB_DEFAULT_URL ?? ''}movie/${movieId}?api_key=${process.env.REACT_APP_API_KEY_TMDB ?? 'API KEY'}&language=en-US`
 
             try {
@@ -20,7 +19,6 @@ export const useFilm = (movieId: number): [any, boolean, string] => {
                 }
             } catch (error: any) {
                 setError(
-                    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                     `There has been a problem with your fetch operation: ${error.message}`
                 )
             } finally {
