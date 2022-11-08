@@ -3,7 +3,7 @@ import React from 'react'
 import './main.css'
 import { useFilmsList } from '../../hooks/useFilmList'
 import Card from '../card/Card'
-import { Box } from '@mui/material'
+import { Backdrop, Box, CircularProgress } from '@mui/material'
 
 interface filmData {
     adult: boolean
@@ -24,18 +24,28 @@ interface filmData {
 
 function Main(props: any): JSX.Element {
     const page = 1
-    const [films, isLoading] = useFilmsList(page, props.isFirstTimeOpen)
+    const [films, isLoading, Error] = useFilmsList(page, props.isFirstTimeOpen)
 
+    if (Error) {
+        console.error(Error)
+    }
     return (
         <Container className='moviebase-app'>
             <Container className='main-block'>
-                <div>{'What\'s Popular'}</div>
+                <div>{'What`s Popular'}</div>
                 <Box className='slider'>
-                    {isLoading
-                        ? 'loading'
-                        : films.map((data: filmData, key = 0) => {
+                    {isLoading ? (
+                        <Backdrop
+                            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                            open={isLoading}
+                        >
+                            <CircularProgress color='inherit' />
+                        </Backdrop>
+                    ) : (
+                        films.map((data: filmData, key = 0) => {
                             return <Card filmData={data} key={key} />
-                        })}
+                        })
+                    )}
                 </Box>
             </Container>
         </Container>

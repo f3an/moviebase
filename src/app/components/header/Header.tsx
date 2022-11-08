@@ -1,16 +1,14 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { useState } from 'react'
 import './header.css'
 import headerLogo from '../../assets/header-logo.jpg'
-import { Box, Divider, IconButton, Typography } from '@mui/material'
+import { Box, Divider, Typography } from '@mui/material'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
 import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import KeyIcon from '@mui/icons-material/Key'
 import GanresModal from '../ganres-modal/GanresModal'
-import SearchIcon from '@mui/icons-material/Search'
-import { useDispatch, useSelector } from 'react-redux'
-import { changeSearchRequest, selectSearchRequest } from '../../taskReducerSlice'
+import SearchInputComponent from '../search-input/SearchInputComponent'
 
 interface User {
     email: string
@@ -27,13 +25,6 @@ function Header(): JSX.Element {
     onAuthStateChanged(auth, (currentUser: any) => {
         setUser(currentUser)
     })
-
-    const dispatch = useDispatch()
-    const searchRequest = useSelector(selectSearchRequest)
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeSearchRequest(e.currentTarget.value))
-    }
 
     return (
         <Box className='moviebase-header'>
@@ -70,7 +61,7 @@ function Header(): JSX.Element {
                     Movies
                     <GanresModal isOpen={isOpen} />
                 </div>
-                <Box
+                <div
                     style={{
                         width: '350px',
                         height: '40px',
@@ -78,23 +69,8 @@ function Header(): JSX.Element {
                         marginLeft: 'auto',
                     }}
                 >
-                    <input
-                        type='text'
-                        placeholder='Search'
-                        className='header-search-input'
-                        onChange={handleChange}
-                    />
-                    <IconButton
-                        type='button'
-                        sx={{ color: '#fff' }}
-                        aria-label='search'
-                        onClick={() => {
-                            console.log(searchRequest)
-                        }}
-                    >
-                        <SearchIcon />
-                    </IconButton>
-                </Box>
+                    <SearchInputComponent/>
+                </div>
             </Box>
             <Box className='moviebase-user-block'>
                 {user !== null ? (

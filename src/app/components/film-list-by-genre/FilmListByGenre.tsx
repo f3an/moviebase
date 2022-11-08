@@ -10,7 +10,7 @@ import {
     selectPage,
 } from '../../taskReducerSlice'
 import Card from '../card/Card'
-import { Box, IconButton } from '@mui/material'
+import { Backdrop, Box, CircularProgress, IconButton } from '@mui/material'
 import { ArrowBack, ArrowForward, KeyboardTab } from '@mui/icons-material'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -39,7 +39,10 @@ function FilmListByGenre(): JSX.Element {
     const genre = useSelector(selectGenre)
 
     const page = useSelector(selectPage)
-    const [filmListByGenre, isLoading] = useFilmListByGenre(genreID, page)
+    const [filmListByGenre, isLoading, Error] = useFilmListByGenre(genreID, page)
+    if (Error) {
+        console.error(Error)
+    }
 
     useEffect(() => {
         dispatch(changePage(Number(location.page)))
@@ -63,7 +66,7 @@ function FilmListByGenre(): JSX.Element {
                     onClick={() => {
                         if (page > 1) {
                             dispatch(changePage(page - 1))
-                            navigate(`/genres/${genre}/${page-1}`)
+                            navigate(`/genres/${genre}/${page - 1}`)
                         }
                     }}
                 >
@@ -74,18 +77,25 @@ function FilmListByGenre(): JSX.Element {
                     type='button'
                     onClick={() => {
                         dispatch(changePage(page + 1))
-                        navigate(`/genres/${genre}/${page+1}`)
+                        navigate(`/genres/${genre}/${page + 1}`)
                     }}
                 >
                     <ArrowForward />
                 </IconButton>
             </Box>
 
-            {isLoading
-                ? 'loading'
-                : filmListByGenre.map((data: filmData, key = 0) => {
+            {isLoading ? (
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={isLoading}
+                >
+                    <CircularProgress color='inherit' />
+                </Backdrop>
+            ) : (
+                filmListByGenre.map((data: filmData, key = 0) => {
                     return <Card filmData={data} key={key} />
-                })}
+                })
+            )}
 
             <Box
                 className='pages-block'
@@ -115,7 +125,7 @@ function FilmListByGenre(): JSX.Element {
                     onClick={() => {
                         if (page > 1) {
                             dispatch(changePage(page - 1))
-                            navigate(`/genres/${genre}/${page-1}`)
+                            navigate(`/genres/${genre}/${page - 1}`)
                         }
                     }}
                 >
@@ -127,7 +137,7 @@ function FilmListByGenre(): JSX.Element {
                     onClick={() => {
                         if (page < 500) {
                             dispatch(changePage(page + 1))
-                            navigate(`/genres/${genre}/${page+1}`)
+                            navigate(`/genres/${genre}/${page + 1}`)
                         }
                     }}
                 >

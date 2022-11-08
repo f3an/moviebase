@@ -13,8 +13,7 @@ import { MoviebaseAnimatedLogo } from './components/animated-logo/AnimatedLogo'
 import Film from './components/film/Film'
 import FilmListByGenre from './components/film-list-by-genre/FilmListByGenre'
 import Popular from './components/popular/Popular'
-import SearchComponent from './components/search/SearchComponent'
-
+import SearchPage from './components/search-page/SearchPage'
 
 function App(): JSX.Element {
     const [isFirstTimeOpen, setIsFirstTimeOpen] = useState(true)
@@ -43,7 +42,7 @@ function App(): JSX.Element {
 
                     <Routes>
                         <Route path='/' element={<Main isFirstTimeOpen={isFirstTimeOpen} />} />
-                        <Route path='/search/:request' element={<SearchComponent/>} />
+                        <Route path='/search/:searchRequest' element={<SearchPage/>} />
                         <Route path='/popular/:page' element={<Popular />} />
                         <Route path='/film/:movieId' element={<Film />} />
                         <Route path='/genres/:genre/:page' element={<FilmListByGenre />} />

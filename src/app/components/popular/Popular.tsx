@@ -4,7 +4,7 @@ import { usePopular } from '../../hooks/usePopular'
 import Card from '../card/Card'
 import { useDispatch, useSelector } from 'react-redux'
 import { changePage, selectPage } from '../../taskReducerSlice'
-import { Box, IconButton } from '@mui/material'
+import { Backdrop, Box, CircularProgress, IconButton } from '@mui/material'
 import { ArrowBack, ArrowForward, KeyboardTab } from '@mui/icons-material'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -31,8 +31,11 @@ function Popular(): JSX.Element {
     dispatch(changePage(Number(location)))
     const page = useSelector(selectPage)
     const navigate = useNavigate()
-    const [films, isLoading] = usePopular(page)
+    const [films, isLoading, Error] = usePopular(page)
 
+    if (Error) {
+        console.error(Error)
+    }
     return (
         <Container className='moviebase-app' style={{ display: 'flex', flexWrap: 'wrap' }}>
             <Box
@@ -50,7 +53,7 @@ function Popular(): JSX.Element {
                     onClick={() => {
                         if (page > 1) {
                             dispatch(changePage(page - 1))
-                            navigate(`/popular/${page-1}`)
+                            navigate(`/popular/${page - 1}`)
                         }
                     }}
                 >
@@ -61,18 +64,25 @@ function Popular(): JSX.Element {
                     type='button'
                     onClick={() => {
                         dispatch(changePage(page + 1))
-                        navigate(`/popular/${page+1}`)
+                        navigate(`/popular/${page + 1}`)
                     }}
                 >
                     <ArrowForward />
                 </IconButton>
             </Box>
 
-            {isLoading
-                ? 'loading'
-                : films.map((data: filmData, key = 0) => {
+            {isLoading ? (
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={isLoading}
+                >
+                    <CircularProgress color='inherit' />
+                </Backdrop>
+            ) : (
+                films.map((data: filmData, key = 0) => {
                     return <Card filmData={data} key={key} />
-                })}
+                })
+            )}
 
             <Box
                 className='pages-block'
@@ -102,7 +112,7 @@ function Popular(): JSX.Element {
                     onClick={() => {
                         if (page > 1) {
                             dispatch(changePage(page - 1))
-                            navigate(`/popular/${page-1}`)
+                            navigate(`/popular/${page - 1}`)
                         }
                     }}
                 >
@@ -114,7 +124,7 @@ function Popular(): JSX.Element {
                     onClick={() => {
                         if (page < 500) {
                             dispatch(changePage(page + 1))
-                            navigate(`/popular/${page+1}`)
+                            navigate(`/popular/${page + 1}`)
                         }
                     }}
                 >

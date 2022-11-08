@@ -2,7 +2,7 @@ import React from 'react'
 import { useFilm } from '../../hooks/useFilm'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeMovieIdValue, selectMovieIdValue } from '../../taskReducerSlice'
-import { Box, Container, Typography } from '@mui/material'
+import { Backdrop, Box, CircularProgress, Container, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
 function Film(): JSX.Element {
@@ -12,13 +12,21 @@ function Film(): JSX.Element {
     const dispatch = useDispatch()
     dispatch(changeMovieIdValue(location))
     const filmId = useSelector(selectMovieIdValue)
-    
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const [filmData, isLoading, Error] = useFilm(filmId)
+    if (Error) {
+        console.error(Error)
+    }
+    
     return (
         <Container className='moviebase-app' style={{ display: 'flex', flexWrap: 'wrap' }}>
             {isLoading ? (
-                'lodaing'
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={isLoading}
+                >
+                    <CircularProgress color='inherit' />
+                </Backdrop>
             ) : (
                 <Box className='movie'>
                     <img
