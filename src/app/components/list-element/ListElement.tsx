@@ -42,7 +42,7 @@ export default function ListElement(props: FilmData): JSX.Element {
                             ? props.filmData.original_title
                             : ''}
                     </h4>
-                    <div className='element-description-overwiev'>
+                    <div className='element-description-overview'>
                         <p>
                             {props.filmData.overview ? props.filmData.overview : <div style={{color:'#858585'}}>Have no overwiev</div>}
                         </p>

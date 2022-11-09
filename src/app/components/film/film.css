@@ -1,0 +1,18 @@
+.movie-block {
+    height: 100%;
+    padding: 25px;
+    display: flex;
+    color: #fff;
+    background-color: #162536a1;
+    border-radius: 5px;
+}
+
+.movie-block-heading {
+    padding: 20px;
+}
+
+.movie-block-overview {
+    padding: 30px;
+    width: 90%;
+    font-size: 20px;
+}
