@@ -3,7 +3,7 @@ import React from 'react'
 import './main.css'
 import { useFilmsList } from '../../hooks/useFilmList'
 import Card from '../card/Card'
-import { Backdrop, Box, CircularProgress } from '@mui/material'
+import { Box, CircularProgress } from '@mui/material'
 
 interface filmData {
     adult: boolean
@@ -35,12 +35,7 @@ function Main(props: any): JSX.Element {
                 <div>{'What`s Popular'}</div>
                 <Box className='slider'>
                     {isLoading ? (
-                        <Backdrop
-                            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                            open={isLoading}
-                        >
-                            <CircularProgress color='inherit' />
-                        </Backdrop>
+                        <CircularProgress color='inherit' />
                     ) : (
                         films.map((data: filmData, key = 0) => {
                             return <Card filmData={data} key={key} />
