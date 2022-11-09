@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 
 export function CircularProgressWithLabel(props: CircularProgressProps & { value: number }) {
     return (
-        <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+        <Box sx={{ position: 'relative', display: 'inline-flex', backgroundColor: '#000', borderRadius: '50%' }}>
             <CircularProgress variant='determinate' color={props.value > 50 ? 'success' : 'error'} {...props} />
             <Box
                 sx={{
@@ -19,7 +19,7 @@ export function CircularProgressWithLabel(props: CircularProgressProps & { value
                     justifyContent: 'center',
                 }}
             >
-                <Typography component='div' color='#fff'>{`${Math.round(
+                <Typography component='div' color={props.value > 50 ? 'success' : 'error'}>{`${Math.round(
                     props.value,
                 )}%`}</Typography>
             </Box>
