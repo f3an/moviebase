@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { changeMovieIdValue, selectMovieIdValue } from '../../taskReducerSlice'
 import { Backdrop, Box, CircularProgress, Container, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
+import { CircularProgressWithLabel } from '../circular-film-raiting/CircularFilmRaiting'
 
 function Film(): JSX.Element {
     const imageApiUrl = process.env.REACT_APP_TMDB_IMAGE_URL ?? ''
@@ -19,7 +20,7 @@ function Film(): JSX.Element {
         console.error(Error)
     }
 
-    console.log(filmData);
+    console.log(filmData)
 
     return (
         <Container
@@ -48,13 +49,15 @@ function Film(): JSX.Element {
                     }}
                 >
                     <div className='movie-block'>
-                        <div style={{position: 'relative'}}>
+                        <div style={{ position: 'relative' }}>
                             <img
                                 src={`${imageApiUrl}${filmData.poster_path}`}
                                 alt={`poster ${filmData.original_title}`}
                                 className='poster'
                             />
-
+                            <div style={{ position: 'absolute', bottom: 0, right: 0 }}>
+                                <CircularProgressWithLabel value={filmData.vote_average * 10} />
+                            </div>
                         </div>
                         <div
                             style={{
