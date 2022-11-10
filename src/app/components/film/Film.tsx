@@ -6,6 +6,7 @@ import { changeMovieIdValue, selectMovieIdValue } from '../../taskReducerSlice'
 import { Backdrop, Box, CircularProgress, Container, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { CircularProgressWithLabel } from '../circular-film-raiting/CircularFilmRaiting'
+import { useVideos } from '../../hooks/useVideos'
 
 function Film(): JSX.Element {
     const imageApiUrl = process.env.REACT_APP_TMDB_IMAGE_URL ?? ''
@@ -20,7 +21,22 @@ function Film(): JSX.Element {
         console.error(Error)
     }
 
-    console.log(filmData)
+    const [videos, isLoadingVideos, videosError] = useVideos(filmId)
+
+    const getTrailerLink = () => {
+        if (!isLoadingVideos) {
+            for (const element of videos) {
+                if (element.name === 'Official Trailer' ||
+                    element.type === 'Trailer') {
+                    return `https://www.youtube.com/embed/${element.key}`
+                }
+            }
+        }
+    }
+
+    if (videosError) {
+        console.error(videosError)
+    }
 
     return (
         <Container
@@ -69,7 +85,9 @@ function Film(): JSX.Element {
                             <div className='movie-block-heading'>
                                 <Typography variant='h4'>{filmData.title}</Typography>
                                 {filmData.title === filmData.original_title ? (
-                                    ''
+                                    <Typography variant='h5' color='#ffffff87'>
+                                        {filmData.tagline}
+                                    </Typography>
                                 ) : (
                                     <Typography variant='h5' color='#858585'>
                                         {filmData.original_title}
@@ -80,6 +98,21 @@ function Film(): JSX.Element {
                         </div>
                     </div>
                 </Box>
+            )}
+            {isLoadingVideos ? (
+                <CircularProgress color='inherit' />
+            ) : (
+                <div className='movie-block-trailer'>
+                    <iframe
+                        width='853'
+                        height='480'
+                        src={getTrailerLink()}
+                        frameBorder='0'
+                        title='Embedded youtube'
+                        // eslint-disable-next-line react/no-unknown-property
+                        allowFullScreen
+                    ></iframe>
+                </div>
             )}
         </Container>
     )

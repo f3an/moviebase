@@ -3,7 +3,8 @@
     padding: 25px;
     display: flex;
     color: #fff;
-    background-color: #162536a1;
+    background-color: #27272787;
+    ;
     border-radius: 5px;
 }
 
@@ -15,4 +16,13 @@
     padding: 30px;
     width: 90%;
     font-size: 20px;
+}
+
+.movie-block-trailer {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #272727;
 }
