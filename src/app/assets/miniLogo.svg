@@ -1,0 +1,9 @@
+<svg width="30" height="30" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="25" cy="25" r="24.5" stroke="#e2f1ff"/>
+<circle cx="25" cy="25" r="21" stroke="#e2f1ff"/>
+<circle cx="25" cy="13" r="5.5" stroke="#e2f1ff"/>
+<circle cx="25" cy="37" r="5.5" stroke="#e2f1ff"/>
+<path d="M18.5 25C18.5 28.0376 16.0376 30.5 13 30.5C9.96243 30.5 7.5 28.0376 7.5 25C7.5 21.9624 9.96243 19.5 13 19.5C16.0376 19.5 18.5 21.9624 18.5 25Z" stroke="#e2f1ff"/>
+<path d="M42.5 25C42.5 28.0376 40.0376 30.5 37 30.5C33.9624 30.5 31.5 28.0376 31.5 25C31.5 21.9624 33.9624 19.5 37 19.5C40.0376 19.5 42.5 21.9624 42.5 25Z" stroke="#e2f1ff"/>
+<rect x="25" y="49" width="25" height="3" fill="#e2f1ff"/>
+</svg>

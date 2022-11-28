@@ -1,61 +1,46 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './App.css'
-import store from './store.js'
-import { Provider } from 'react-redux'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Header from './components/header/Header'
-import Footer from './components/footer/Footer'
-import Registeration from './components/authorization/Authorization'
-import Main from './components/main/Main'
-import Account from './components/account/Account'
-import Forgot from './components/forgot/Forgot'
+import { Provider } from 'react-redux'
+import { store } from './store/store'
+import { MainPage } from './components/mainPage/mainPage'
+import { Header } from './components/header/header'
+import { Footer } from './components/footer/footer'
 import { MoviebaseAnimatedLogo } from './components/animated-logo/AnimatedLogo'
-import Film from './components/film/Film'
-import FilmListByGenre from './components/film-list-by-genre/FilmListByGenre'
-import Popular from './components/popular/Popular'
-import SearchPage from './components/search-page/SearchPage'
+import { MoviePage } from './components/moviePage/moviePage'
+import { TrendingMoviesPage } from './components/trendingMoviesPage/trendingMoviesPage'
+import { MoviesByGenrePage } from './components/moviesByGenrePage/moviesByGenrePage'
+import { AuthorizationPage } from './components/authorizationPage/AuthorizationPage'
+import { AccountPage } from './components/accountPage/accountPage'
+import { SearchPage } from './components/searchPage/searchPage'
+import { ForgotPasswordPage } from './components/forgotPasswordPage/forgotPasswordPage'
 
-function App(): JSX.Element {
-    const [isFirstTimeOpen, setIsFirstTimeOpen] = useState(true)
+function App() {
+  const [isFirstTimeOpen, setIsFirstTimeOpen] = useState(true)
 
-    useEffect(() => {
-        const t = setTimeout(() => {
-            setIsFirstTimeOpen(false)
-        }, 2500)
-        return () => clearTimeout(t)
-    }, [isFirstTimeOpen])
+  setTimeout(() => {
+    setIsFirstTimeOpen(false)
+  }, 2300)
 
-    return (
-        <Provider store={store}>
-            <div
-                className='App'
-            >
-                <BrowserRouter>
-                    {isFirstTimeOpen ? (
-                        <div className='moviebase-greeting-block'>
-                            <MoviebaseAnimatedLogo />
-                        </div>
-                    ) : (
-                        <></>
-                    )}
-                    <Header></Header>
-
-                    <Routes>
-                        <Route path='/' element={<Main isFirstTimeOpen={isFirstTimeOpen} />} />
-                        <Route path='/search/:searchRequest' element={<SearchPage/>} />
-                        <Route path='/popular/:page' element={<Popular />} />
-                        <Route path='/film/:movieId' element={<Film />} />
-                        <Route path='/genres/:genre/:page' element={<FilmListByGenre />} />
-                        <Route path='/account' element={<Account />} />
-                        <Route path='/account/authorization' element={<Registeration />} />
-                        <Route path='/account/authorization/forgot' element={<Forgot />} />
-                    </Routes>
-
-                    <Footer></Footer>
-                </BrowserRouter>
-            </div>
-        </Provider>
-    )
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        {isFirstTimeOpen ? <MoviebaseAnimatedLogo /> : ''}
+        <Header />
+        <Routes>
+          <Route path='/' element={<MainPage />} />
+          <Route path='/trending/:page' element={<TrendingMoviesPage />} />
+          <Route path='/genre/:genreId/:page' element={<MoviesByGenrePage />} />
+          <Route path='/movie/:movieId' element={<MoviePage />} />
+          <Route path='/account' element={<AccountPage />} />
+          <Route path='/authorization' element={<AuthorizationPage />} />
+          <Route path='/authorization/forgot' element={<ForgotPasswordPage />} />
+          <Route path='/search/:searchRequest/:page' element={<SearchPage />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </Provider>
+  )
 }
 
 export default App

@@ -1,19 +1,9 @@
 .App {
-    height: 100%;
-    background-color: #e4e5e9;
-}
-
-
-.moviebase-greeting-block {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    position: absolute;
-    z-index: 2;
-
-    background-color: #DDE8FB;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
