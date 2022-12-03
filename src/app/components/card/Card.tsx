@@ -1,41 +1,68 @@
-import React from 'react'
-import './card.css'
+import React, { useState } from 'react'
+import { Box, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { changeMovieIdValue } from '../../taskReducerSlice'
+import { stylePoster } from './stylePoster'
+import notFound from '../../assets/notFoundImg.jpeg'
 
-interface FilmData {
-    filmData: {
-        poster_path: string
-        title: string
-        original_language: string
-        id: number
-    }
+function MainPageCard({ movieData, type }: Props): JSX.Element {
+  const [hover, setHover] = useState(false)
+
+  return (
+    <Link to={`/${type}/${movieData.id}`} style={{ textDecoration: 'none', color: '#fff' }}>
+      <Box
+        sx={{
+          height: '420px',
+          width: '260px',
+          display: 'flex',
+          flexDirection: 'column',
+          borderRadius: '15px',
+          cursor: 'pointer',
+        }}
+        onMouseEnter={() => {
+          setHover(true)
+        }}
+        onMouseLeave={() => {
+          setHover(false)
+        }}
+      >
+        <img
+          src={
+            movieData.poster_path !== null
+              ? `${process.env.REACT_APP_TMDB_IMAGE_URL}${movieData.poster_path}`
+              : notFound
+          }
+          style={hover ? stylePoster.hovered : stylePoster.normal}
+        />
+        <Box sx={{ padding: '5px', display: 'flex', justifyContent: 'center' }}>
+          <Typography>{movieData.title ? movieData.title : movieData.name}</Typography>
+        </Box>
+      </Box>
+    </Link>
+  )
 }
-const imageApiUrl = process.env.REACT_APP_TMDB_IMAGE_URL ?? ''
 
-function Card(props: FilmData): JSX.Element {
-    const dispatch = useDispatch()
-    return (
-        <Link
-            to={`/film/${props.filmData.id}`}
-            style={{ textDecoration: 'none' }}
-            onClick={() => {
-                dispatch(changeMovieIdValue(props.filmData.id))
-            }}
-        >
-            <div className='film-card'>
-                <img
-                    src={`${imageApiUrl}${props.filmData.poster_path}`}
-                    alt={`poster ${props.filmData.title}`}
-                    className='poster'
-                />
-                <div className='film-card-description'>
-                    <h3>{props.filmData.title}</h3>
-                </div>
-            </div>
-        </Link>
-    )
+export default MainPageCard
+
+type Props = {
+  movieData: movieData
+  type: string
 }
 
-export default Card
+type movieData = {
+  adult: boolean
+  backdrop_path: string
+  genre_ids: number[]
+  id: number
+  original_language: string
+  original_title: string
+  overview: string
+  popularity: number
+  poster_path: string
+  release_date: string
+  title: string
+  video: boolean
+  vote_average: number
+  vote_count: number
+  tagline: string
+  name?: string
+}
