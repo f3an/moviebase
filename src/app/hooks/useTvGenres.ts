@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const useGenres = (type: string): [genres[] | undefined, boolean, string] => {
+export const useTvGenres = (): [genres[] | undefined, boolean, string] => {
   const [isLoading, setIsLoading] = useState(false)
   const [genres, setGenres] = useState<genres[]>()
   const [error, setError] = useState('')
@@ -8,7 +8,7 @@ export const useGenres = (type: string): [genres[] | undefined, boolean, string]
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       setIsLoading(true)
-      const url = `${process.env.REACT_APP_TMDB_DEFAULT_URL ?? ''}genre/${type}/list?api_key=${
+      const url = `${process.env.REACT_APP_TMDB_DEFAULT_URL ?? ''}genre/tv/list?api_key=${
         process.env.REACT_APP_API_KEY_TMDB ?? 'API KEY'
       }&language=en-US`
 
@@ -29,7 +29,7 @@ export const useGenres = (type: string): [genres[] | undefined, boolean, string]
     }
 
     void fetchData()
-  }, [type])
+  }, [])
 
   return [genres, isLoading, error]
 }

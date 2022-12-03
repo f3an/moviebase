@@ -1,26 +1,29 @@
 import React, { useEffect } from 'react'
-import { useMovie } from '../../hooks/useMovie'
 import { Backdrop, Box, CircularProgress } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { changeMovieIdValue, selectMovieIdValue } from '../../store/storeSlices/movieReducerSlice'
-import { MoviePageDescription } from './moviePageDescription'
-import { MoviePageTrailers } from './moviePageTrailers'
+import { TvSeriesPageDescription } from './tvSeriesPageDescription'
+import { MoviePageTrailers } from './tvSeriesPageTrailers'
+import {
+  changeTvSeriesIdValue,
+  selectTvSeriesIdValue,
+} from '../../store/storeSlices/tvSeriesReducerSlice'
+import { useTvSeries } from '../../hooks/useTvSeries'
 
-export const MoviePage: React.FC = () => {
-  const location = useParams()?.movieId
+export const TvSeriesPage: React.FC = () => {
+  const location = useParams()
   const dispatch = useAppDispatch()
-  const movieId = useAppSelector(selectMovieIdValue)
+  const tvSeriesId = useAppSelector(selectTvSeriesIdValue)
 
-  const [movieData, isLoading] = useMovie(movieId)
+  const [tvSeriesData, isLoading] = useTvSeries(tvSeriesId)
 
   useEffect(() => {
-    if (location !== undefined && movieId !== Number(location)) {
-      dispatch(changeMovieIdValue(Number(location)))
+    if (location.tvSeriesId !== undefined && tvSeriesId !== Number(location.tvSeriesId)) {
+      dispatch(changeTvSeriesIdValue(Number(location.tvSeriesId)))
     }
-  }, [location, dispatch, movieId])
+  }, [location, dispatch, tvSeriesId])
 
-  const backdrop = `url(${process.env.REACT_APP_TMDB_BACKDROP_IMAGE_URL}${movieData?.backdrop_path})`
+  const backdrop = `url(${process.env.REACT_APP_TMDB_BACKDROP_IMAGE_URL}${tvSeriesData?.backdrop_path})`
 
   return (
     <>
@@ -33,7 +36,7 @@ export const MoviePage: React.FC = () => {
           color: '#fff',
         }}
       >
-        {!isLoading && movieData ? (
+        {!isLoading && tvSeriesData ? (
           <Box
             sx={{
               paddingTop: '100px',
@@ -44,8 +47,8 @@ export const MoviePage: React.FC = () => {
               flexDirection: 'column',
             }}
           >
-            <MoviePageDescription movieData={movieData} />
-            <MoviePageTrailers movieId={movieId} />
+            <TvSeriesPageDescription tvSeriesData={tvSeriesData} />
+            <MoviePageTrailers movieId={tvSeriesId} />
           </Box>
         ) : (
           <Backdrop

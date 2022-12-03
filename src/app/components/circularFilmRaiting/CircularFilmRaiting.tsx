@@ -9,7 +9,7 @@ export function CircularProgressWithLabel(props: CircularProgressProps & { value
       sx={{
         position: 'relative',
         display: 'inline-flex',
-        backgroundColor: '#f0f0',
+        backgroundColor: '#000',
         borderRadius: '50%',
       }}
     >

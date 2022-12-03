@@ -5,7 +5,7 @@ export const searchSlice = createSlice({
   name: 'search',
   initialState: {
     searchRequest: '',
-    page: 0,
+    page: 1,
   },
   reducers: {
     changeSearchRequest: (state, data: PayloadAction<string>) => {

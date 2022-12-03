@@ -23,12 +23,10 @@ export const SearchPage: React.FC = () => {
 
   useEffect(() => {
     if (
-      location.searchRequest &&
-      location.page &&
-      searchRequest !== location.searchRequest &&
-      searchPage !== Number(location.page)
+      (location.searchRequest && location.page) ||
+      (searchRequest !== location.searchRequest && searchPage !== Number(location.page))
     ) {
-      dispatch(changeSearchRequest(location.searchRequest))
+      dispatch(changeSearchRequest(location.searchRequest as string))
       dispatch(changePage(Number(location.page)))
     }
   }, [dispatch, location.page, location.searchRequest, searchPage, searchRequest])
@@ -38,17 +36,17 @@ export const SearchPage: React.FC = () => {
       sx={{
         minHeight: '100%',
         width: '100%',
-        background: `${backdrop}, #181817`,
-        backgroundRepeat: 'no-repeat',
+        background: `no-repeat ${backdrop}, #181817`,
         backgroundSize: 'cover',
         color: '#fff',
       }}
     >
       {!isLoading ? (
-        <Box sx={{ backgroundColor: '#27272787', height: '100%', width: '100%' }}>
+        <Box sx={{ backgroundColor: '#27272787' }}>
           <Container>
             <Box
               style={{
+                minHeight: '100vh',
                 paddingTop: '100px',
                 display: 'flex',
                 flexWrap: 'wrap',
@@ -56,7 +54,7 @@ export const SearchPage: React.FC = () => {
               }}
             >
               {movies.map((movie: movieData, key) => {
-                return <Card movieData={movie} key={key} />
+                return <Card type='movie' movieData={movie} key={key} />
               })}
             </Box>
           </Container>

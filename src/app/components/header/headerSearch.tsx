@@ -16,10 +16,10 @@ export const HeaderSearch: React.FC = () => {
   }
 
   const handleClick = () => {
-    if (searchRequest !== '' && searchRef.current) {
+    if (searchRef.current && searchRequest !== searchRef.current.value) {
       dispatch(changeSearchRequest(btoa(searchRef.current.value)))
+      navigate(`/search/${btoa(searchRef.current.value)}/1`)
       searchRef.current.value = ''
-      navigate(`/search/${searchRequest}/1`)
     }
   }
 
@@ -37,6 +37,11 @@ export const HeaderSearch: React.FC = () => {
         type='text'
         placeholder='Search'
         onChange={handleChange}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleClick()
+          }
+        }}
         ref={searchRef}
         style={{
           width: '280px',

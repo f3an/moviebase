@@ -2,7 +2,7 @@ export const stylePoster = {
   normal: {
     height: '400px',
     width: '250px',
-    transform: 'scale(0.90)',
+    transform: 'scale(0.9)',
     borderRadius: '10px',
     transitionProperty: 'transform',
     transitionDuration: '0.5s',

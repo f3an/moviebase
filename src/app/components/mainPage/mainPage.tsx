@@ -26,8 +26,7 @@ export const MainPage: React.FC = () => {
       sx={{
         width: '100%',
         height: '100%',
-        background: `${backdrop}, #181817`,
-        backgroundRepeat: 'no-repeat',
+        background: `no-repeat ${backdrop}, #181817`,
         backgroundSize: 'cover',
         color: '#fff',
       }}

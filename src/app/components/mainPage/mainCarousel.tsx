@@ -12,6 +12,9 @@ export const MainCarousel: React.FC<props> = ({ movies, focusedMovie, clickCardE
         overflowX: 'hidden',
         justifySelf: 'flex-end',
         marginLeft: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '30px',
         '&::-webkit-scrollbar': {
           width: '8px',
           '--webkit-appearance': 'none',

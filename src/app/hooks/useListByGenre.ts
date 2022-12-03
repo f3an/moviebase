@@ -1,21 +1,29 @@
 import { useEffect, useState } from 'react'
 
-export const useSearch = (query: string, page: number): [movieData[], boolean, string] => {
-  const [movies, setMovies] = useState<movieData[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+export const useListByGenre = (
+  type: string,
+  genreId: number,
+  page: number,
+): [movieDataList, boolean, string] => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [movieListByGenre, setMovieListByGenre] = useState<movieDataList>({
+    results: [],
+    total_pages: 0,
+  })
   const [error, setError] = useState('')
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      const url = `${process.env.REACT_APP_TMDB_DEFAULT_URL ?? ''}search/movie?api_key=${
+      setIsLoading(true)
+      const url = `${process.env.REACT_APP_TMDB_DEFAULT_URL ?? ''}discover/${type}?api_key=${
         process.env.REACT_APP_API_KEY_TMDB ?? 'API KEY'
-      }&language=en-US&query=${atob(query)}&page=${page}`
+      }&with_genres=${genreId}&page=${page}`
 
       try {
         const response = await fetch(url)
-        const data: movieDataList = await response.json()
         if (response.status === 200) {
-          setMovies(data.results)
+          const data: movieDataList = await response.json()
+          setMovieListByGenre(data)
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -25,10 +33,11 @@ export const useSearch = (query: string, page: number): [movieData[], boolean, s
         setIsLoading(false)
       }
     }
-    void fetchData()
-  }, [query, page])
 
-  return [movies, isLoading, error]
+    void fetchData()
+  }, [genreId, page, type])
+
+  return [movieListByGenre, isLoading, error]
 }
 
 type movieData = {
@@ -49,7 +58,7 @@ type movieData = {
   tagline: string
 }
 
-type movieDataList = {
-  page: number
+interface movieDataList {
   results: movieData[]
+  total_pages: number
 }

@@ -5,7 +5,7 @@ import { Backdrop, Box, CircularProgress } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { Pageling } from './pageling'
-import { useMovieListByGenre } from '../../hooks/useMovieListByGenre'
+import { useListByGenre } from '../../hooks/useListByGenre'
 import {
   changeGenreIdValue,
   changePage,
@@ -21,15 +21,12 @@ export const MoviesByGenrePage: React.FC = () => {
   const page = useAppSelector(selectGenrePage)
   const genreId = useAppSelector(selectGenreIdValue)
 
-  const [movieListByGenre, isLoading] = useMovieListByGenre(genreId, page)
-  const backdrop = useBackdrop(movieListByGenre)
+  const [movieListByGenre, isLoading] = useListByGenre('movie', genreId, page)
+  const backdrop = useBackdrop(movieListByGenre.results)
 
   useEffect(() => {
-    console.log(page !== Number(location.page))
-
     if (
-      location !== undefined &&
-      page !== Number(location.page) ||
+      (location !== undefined && page !== Number(location.page)) ||
       genreId !== Number(location.genreId)
     ) {
       dispatch(changeGenreIdValue(Number(location.genreId)))
@@ -42,8 +39,7 @@ export const MoviesByGenrePage: React.FC = () => {
       sx={{
         minHeight: '100%',
         width: '100%',
-        background: `${backdrop}, #181817`,
-        backgroundRepeat: 'no-repeat',
+        background: `no-repeat ${backdrop}, #181817`,
         backgroundSize: 'cover',
         color: '#fff',
       }}
@@ -60,18 +56,20 @@ export const MoviesByGenrePage: React.FC = () => {
           ) : (
             <Box
               style={{
-                minHeight: '100%',
+                minHeight: '100vh',
                 paddingTop: '100px',
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'center',
               }}
             >
-              <Pageling genreId={genreId} />
-              {movieListByGenre.map((movie: movieData, key = 0) => {
-                return <Card movieData={movie} key={key} />
-              })}
-              <Pageling genreId={genreId} />
+              <Pageling genreId={genreId} totalPages={movieListByGenre.total_pages} />
+              {!isLoading
+                ? movieListByGenre.results.map((movie: movieData, key = 0) => {
+                  return <Card type='movie' movieData={movie} key={key} />
+                })
+                : ''}
+              <Pageling genreId={genreId} totalPages={movieListByGenre.total_pages} />
             </Box>
           )}
         </Container>

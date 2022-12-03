@@ -4,17 +4,13 @@ import { Link } from 'react-router-dom'
 import { stylePoster } from './stylePoster'
 import notFound from '../../assets/notFoundImg.jpeg'
 
-function MainPageCard({ movieData }: Props): JSX.Element {
+function MainPageCard({ movieData, type }: Props): JSX.Element {
   const [hover, setHover] = useState(false)
 
   return (
-    <Link
-      to={`/movie/${movieData.id}`}
-      style={{ textDecoration: 'none', color: '#fff', margin: '5px' }}
-    >
+    <Link to={`/${type}/${movieData.id}`} style={{ textDecoration: 'none', color: '#fff' }}>
       <Box
         sx={{
-          marginBottom: '20px',
           height: '420px',
           width: '260px',
           display: 'flex',
@@ -38,7 +34,7 @@ function MainPageCard({ movieData }: Props): JSX.Element {
           style={hover ? stylePoster.hovered : stylePoster.normal}
         />
         <Box sx={{ padding: '5px', display: 'flex', justifyContent: 'center' }}>
-          <Typography>{movieData.title}</Typography>
+          <Typography>{movieData.title ? movieData.title : movieData.name}</Typography>
         </Box>
       </Box>
     </Link>
@@ -49,6 +45,7 @@ export default MainPageCard
 
 type Props = {
   movieData: movieData
+  type: string
 }
 
 type movieData = {
@@ -67,4 +64,5 @@ type movieData = {
   vote_average: number
   vote_count: number
   tagline: string
+  name?: string
 }

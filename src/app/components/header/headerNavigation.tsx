@@ -5,9 +5,19 @@ import { HeaderSearch } from './headerSearch'
 import { HeaderGenresModal } from './headerGenresModal'
 
 export const HeaderNavigation: React.FC = () => {
-  const [showGenre, setShowGenre] = useState(false)
-  const toggle = () => {
-    showGenre ? setShowGenre(false) : setShowGenre(true)
+  const [showMovieGenres, setShowMovieGenres] = useState(false)
+  const [showTvGenres, setShowTvGenres] = useState(false)
+  const toggleShowMovieGenres = () => {
+    if (showTvGenres) {
+      setShowTvGenres(false)
+    }
+    showMovieGenres ? setShowMovieGenres(false) : setShowMovieGenres(true)
+  }
+  const toggleShowTvGenres = () => {
+    if (showMovieGenres) {
+      setShowMovieGenres(false)
+    }
+    showTvGenres ? setShowTvGenres(false) : setShowTvGenres(true)
   }
   return (
     <Box
@@ -19,12 +29,21 @@ export const HeaderNavigation: React.FC = () => {
         <Typography sx={{ m: 2 }}>Trending</Typography>
       </Link>
       <Box sx={{ position: 'relative' }}>
-        <Typography sx={{ m: 2 }} onClick={toggle} style={{ cursor: 'pointer' }}>
+        <Typography sx={{ m: 2 }} onClick={toggleShowMovieGenres} style={{ cursor: 'pointer' }}>
           Ganres
         </Typography>
-        {showGenre ? <HeaderGenresModal toggle={toggle}/> : ''}
+        {showMovieGenres ? (
+          <HeaderGenresModal toggle={toggleShowMovieGenres} type='movie' />
+        ) : (
+          ''
+        )}
       </Box>
-      <Typography sx={{ m: 2 }}>TV Series</Typography>
+      <Box sx={{ position: 'relative' }}>
+        <Typography sx={{ m: 2 }} onClick={toggleShowTvGenres} style={{ cursor: 'pointer' }}>
+          TV Series
+        </Typography>
+        {showTvGenres ? <HeaderGenresModal toggle={toggleShowTvGenres} type='tv' /> : ''}
+      </Box>
       <HeaderSearch />
     </Box>
   )

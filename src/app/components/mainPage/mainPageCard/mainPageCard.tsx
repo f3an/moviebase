@@ -18,7 +18,7 @@ function MainPageCard({ movieData, cardClickEvent }: Props): JSX.Element {
         className='poster'
       />
       <Box className='film-card-description'>
-        <Typography>{movieData.title}</Typography>
+        <Typography variant='subtitle1'>{movieData.title}</Typography>
       </Box>
     </Box>
   )

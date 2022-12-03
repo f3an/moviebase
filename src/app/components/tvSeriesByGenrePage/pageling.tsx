@@ -10,7 +10,7 @@ import {
   selectGenrePage,
 } from '../../store/storeSlices/genreReducerSlice'
 
-export const Pageling: React.FC<{ genreId: number, totalPages: number }>  = ({ genreId, totalPages }) => {
+export const Pageling: React.FC<{ genreId: number, totalPages: number }> = ({ genreId, totalPages }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const page = useAppSelector(selectGenrePage)
@@ -31,7 +31,7 @@ export const Pageling: React.FC<{ genreId: number, totalPages: number }>  = ({ g
           type='button'
           onClick={() => {
             dispatch(changePage(1))
-            navigate(`/movie/genre/${genreId}/1`)
+            navigate(`/tv/genre/${genreId}/1`)
           }}
         >
           <KeyboardTab sx={{ transform: 'rotate(180deg)', color: '#fff' }} />
@@ -45,7 +45,7 @@ export const Pageling: React.FC<{ genreId: number, totalPages: number }>  = ({ g
           onClick={() => {
             if (page > 1) {
               dispatch(decrementPage)
-              navigate(`/movie/genre/${genreId}/${page - 1}`)
+              navigate(`/tv/genre/${genreId}/${page - 1}`)
             }
           }}
         >
@@ -65,7 +65,7 @@ export const Pageling: React.FC<{ genreId: number, totalPages: number }>  = ({ g
           onClick={() => {
             if (page < totalPages) {
               dispatch(incrementPage)
-              navigate(`/movie/genre/${genreId}/${page + 1}`)
+              navigate(`/tv/genre/${genreId}/${page + 1}`)
             }
           }}
         >
@@ -79,7 +79,7 @@ export const Pageling: React.FC<{ genreId: number, totalPages: number }>  = ({ g
           type='button'
           onClick={() => {
             dispatch(changePage(totalPages))
-            navigate(`/movie/genre/${genreId}/${totalPages}`)
+            navigate(`/tv/genre/${genreId}/${totalPages}`)
           }}
         >
           <KeyboardTab sx={{ color: '#fff' }} />

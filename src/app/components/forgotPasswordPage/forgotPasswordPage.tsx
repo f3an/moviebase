@@ -29,7 +29,7 @@ export const ForgotPasswordPage: React.FC = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#1c72ae',
+        backgroundColor: '#181817',
       }}
     >
       <Box>
@@ -40,6 +40,13 @@ export const ForgotPasswordPage: React.FC = () => {
           autoComplete='off'
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
+          sx={{
+            '& .MuiFormLabel-root': {
+              color: 'white',
+            },
+            backgroundColor: 'gray',
+            borderRadius: '5px'
+          }}
         />
 
         <Button

@@ -3,8 +3,8 @@ import { Typography, Box } from '@mui/material'
 import { useGenres } from '../../hooks/useGenres'
 import { Link } from 'react-router-dom'
 
-export const HeaderGenresModal: React.FC<{ toggle: () => void }> = ({ toggle }) => {
-  const [genres] = useGenres()
+export const HeaderGenresModal: React.FC<{ toggle: () => void, type: string }> = ({ toggle, type }) => {
+  const [genres] = useGenres(type)
   return (
     <Box
       sx={{
@@ -25,7 +25,7 @@ export const HeaderGenresModal: React.FC<{ toggle: () => void }> = ({ toggle }) 
         return (
           <Typography key={element.id} sx={{ m: 1 }}>
             <Link
-              to={`/genre/${element.id}/1`}
+              to={`${type}/genre/${element.id}/1`}
               style={{ textDecoration: 'none', color: '#fff' }}
               onClick={toggle}
             >

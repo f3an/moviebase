@@ -3,13 +3,15 @@ import genreReducerSlice from './storeSlices/genreReducerSlice'
 import movieReducerSlice from './storeSlices/movieReducerSlice'
 import popularMoviesReducerSlice from './storeSlices/popularMoviesReducerSlice'
 import searchSlice from './storeSlices/searchSlice'
+import tvSeriesReducerSlice from './storeSlices/tvSeriesReducerSlice'
 
 export const store = configureStore({
   reducer: {
     genreReducer: genreReducerSlice,
     movieReducer: movieReducerSlice,
     popularMovieReducer: popularMoviesReducerSlice,
-    searchReducer: searchSlice
+    searchReducer: searchSlice,
+    tvSeriesReducer: tvSeriesReducerSlice
   },
 })
 

@@ -1,30 +1,36 @@
 import React, { useEffect } from 'react'
 import { Container } from '@mui/system'
 import Card from '../card/Card'
-import {
-  changePage,
-  selectPopularMoviesPage,
-} from '../../store/storeSlices/popularMoviesReducerSlice'
 import { Backdrop, Box, CircularProgress } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { usePopularMovies } from '../../hooks/useTrendingMoives'
 import { Pageling } from './pageling'
+import { useListByGenre } from '../../hooks/useListByGenre'
+import {
+  changeGenreIdValue,
+  changePage,
+  selectGenreIdValue,
+  selectGenrePage,
+} from '../../store/storeSlices/genreReducerSlice'
 import { useBackdrop } from '../../hooks/useBackdrop'
 
-export const TrendingMoviesPage: React.FC = () => {
-  const location = useParams().page
+export const TvSeriesByGenrePage: React.FC = () => {
+  const location = useParams()
   const dispatch = useAppDispatch()
-  const page = useAppSelector(selectPopularMoviesPage)
-  const [movies, isLoading] = usePopularMovies(page)
-
-  const backdrop = useBackdrop(movies)
+  const page = useAppSelector(selectGenrePage)
+  const genreId = useAppSelector(selectGenreIdValue)
+  const [tvListByGenre, isLoading] = useListByGenre('tv', genreId, page)
+  const backdrop = useBackdrop(tvListByGenre.results)
 
   useEffect(() => {
-    if (location !== undefined && page !== Number(location)) {
-      dispatch(changePage(Number(location)))
+    if (
+      (location !== undefined && page !== Number(location.page)) ||
+      genreId !== Number(location.genreId)
+    ) {
+      dispatch(changeGenreIdValue(Number(location.genreId)))
+      dispatch(changePage(Number(location.page)))
     }
-  }, [location, dispatch, movies, page])
+  }, [location, dispatch, tvListByGenre, page, genreId, isLoading])
 
   return (
     <Box
@@ -48,20 +54,20 @@ export const TrendingMoviesPage: React.FC = () => {
           ) : (
             <Box
               style={{
-                height: '100%',
+                minHeight: '100vh',
                 paddingTop: '100px',
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'center',
               }}
             >
-              <Pageling />
+              <Pageling genreId={genreId} totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500} />
               {!isLoading
-                ? movies.map((movie: movieData, key = 0) => {
-                  return <Card type='movie' movieData={movie} key={key} />
+                ? tvListByGenre.results.map((movie: tvSeriesData, key = 0) => {
+                  return <Card movieData={movie} type='tv' key={key} />
                 })
                 : ''}
-              <Pageling />
+              <Pageling genreId={genreId} totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500} />
             </Box>
           )}
         </Container>
@@ -70,7 +76,7 @@ export const TrendingMoviesPage: React.FC = () => {
   )
 }
 
-type movieData = {
+type tvSeriesData = {
   adult: boolean
   backdrop_path: string
   genre_ids: number[]
