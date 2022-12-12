@@ -18,6 +18,7 @@ import { TvSeriesByGenrePage } from './components/tvSeriesByGenrePage/tvSeriesBy
 import { TvSeriesPage } from './components/tvSeriesPage/tvSeriesPage'
 import { ThemeProvider } from '@mui/material'
 import { theme } from './theme'
+import { ScrollToTop } from './hooks/useScrollOnTop'
 
 function App() {
   const [isFirstTimeOpen, setIsFirstTimeOpen] = useState(true)
@@ -30,6 +31,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <BrowserRouter>
+          <ScrollToTop />
           {isFirstTimeOpen ? <MoviebaseAnimatedLogo /> : ''}
           <Header />
           <Routes>

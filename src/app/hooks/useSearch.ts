@@ -15,14 +15,14 @@ export const useSearch = (query: string, page: number): [movieData[], boolean, s
         const response = await fetch(url)
         const data: movieDataList = await response.json()
         if (response.status === 200) {
-          setMovies(data.results)
+          await setMovies(data.results)
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
-          setError(`There has been a problem with your fetch operation: ${error.message}`)
+          await setError(`There has been a problem with your fetch operation: ${error.message}`)
         }
       } finally {
-        setIsLoading(false)
+        await setIsLoading(false)
       }
     }
     void fetchData()

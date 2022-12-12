@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
         alignItems: 'center',
         position: 'absolute',
         color: '#fff',
-        backgroundColor: '#2087cf',
+        backgroundColor: '#30302f',
       }}
     >
       Footer

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import KeyIcon from '@mui/icons-material/Key'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
+import userAvatar from '../../assets/avatarUser.jpg'
 
 export const HeaderAuthButton: React.FC = () => {
   const [user, setUser] = useState<User>()
@@ -25,11 +26,18 @@ export const HeaderAuthButton: React.FC = () => {
             textDecoration: 'none',
             color: '#fff',
             display: 'flex',
-            width: '20%',
+            width: '100%',
             justifyContent: 'center',
+            alignItems: 'center',
+            gap: '5px'
           }}
         >
-          {user.email}
+          <img
+            src={user ? (user.photoURL == null ? userAvatar : user.photoURL) : userAvatar}
+            alt='user-avatar'
+            style={{ width: '35px', height: '35px', borderRadius: '50%' }}
+          />
+          <Typography>{user.email}</Typography>
         </Link>
       ) : (
         <Link to='/authorization' style={{ textDecoration: 'none', color: 'white' }}>
