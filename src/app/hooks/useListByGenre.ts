@@ -23,7 +23,7 @@ export const useListByGenre = (
         const response = await fetch(url)
         if (response.status === 200) {
           const data: movieDataList = await response.json()
-          setMovieListByGenre(data)
+          await setMovieListByGenre(data)
         }
       } catch (error: unknown) {
         if (error instanceof Error) {

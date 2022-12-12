@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Box, IconButton } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
@@ -10,10 +10,6 @@ export const HeaderSearch: React.FC = () => {
   const dispatch = useAppDispatch()
   const searchRequest = useAppSelector(selectSearchRequest)
   const searchRef = useRef<HTMLInputElement>(null)
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(changeSearchRequest(btoa(e.currentTarget.value)))
-  }
 
   const handleClick = () => {
     if (searchRef.current && searchRequest !== searchRef.current.value) {
@@ -36,7 +32,6 @@ export const HeaderSearch: React.FC = () => {
       <input
         type='text'
         placeholder='Search'
-        onChange={handleChange}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             handleClick()

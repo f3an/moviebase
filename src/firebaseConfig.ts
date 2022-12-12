@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
+import { getAuth, User, updateProfile } from 'firebase/auth'
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,3 +14,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 
 export const auth = getAuth(app)
+
+const storage = getStorage()
+
+export async function upload(
+  file: File | undefined,
+  currentUser: User | undefined,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+) {
+  setIsLoading(true)
+  if (currentUser && file) {
+    const fileRef = ref(storage, `files/${currentUser.uid}/${file.name}`)
+    await uploadBytes(fileRef, file)
+    const photoUrl = await getDownloadURL(fileRef)
+    updateProfile(currentUser, { photoURL: photoUrl })
+  }
+  setIsLoading(false)
+}

@@ -17,14 +17,14 @@ export const useVideos = (movieId: number): [videos[] | undefined, boolean, stri
         const response = await fetch(url)
         const data: response = await response.json()
         if (response.status === 200) {
-          setVideos(data.results)
+          await setVideos(data.results)
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
-          setError(`There has been a problem with your fetch operation: ${error.message}`)
+          await setError(`There has been a problem with your fetch operation: ${error.message}`)
         }
       } finally {
-        setIsLoading(false)
+        await setIsLoading(false)
       }
     }
 

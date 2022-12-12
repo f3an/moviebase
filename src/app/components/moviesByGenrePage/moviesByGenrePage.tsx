@@ -64,11 +64,9 @@ export const MoviesByGenrePage: React.FC = () => {
               }}
             >
               <Pageling genreId={genreId} totalPages={movieListByGenre.total_pages} />
-              {!isLoading
-                ? movieListByGenre.results.map((movie: movieData, key = 0) => {
-                  return <Card type='movie' movieData={movie} key={key} />
-                })
-                : ''}
+              {movieListByGenre.results.map((movie: movieData, key = 0) => {
+                return <Card type='movie' movieData={movie} key={key} />
+              })}
               <Pageling genreId={genreId} totalPages={movieListByGenre.total_pages} />
             </Box>
           )}

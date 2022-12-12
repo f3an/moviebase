@@ -17,15 +17,14 @@ export const useTvSeries = (iD: number): [tvSeriesData | undefined, boolean, str
         const response = await fetch(url)
         const data: tvSeriesData = await response.json()
         if (response.status === 200) {
-          console.log(data)
-          setMovieData(data)
+          await setMovieData(data)
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
-          setError(`There has been a problem with your fetch operation: ${error.message}`)
+          await setError(`There has been a problem with your fetch operation: ${error.message}`)
         }
       } finally {
-        setIsLoading(false)
+        await setIsLoading(false)
       }
     }
 

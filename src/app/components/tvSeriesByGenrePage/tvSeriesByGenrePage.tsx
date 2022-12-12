@@ -61,13 +61,17 @@ export const TvSeriesByGenrePage: React.FC = () => {
                 justifyContent: 'center',
               }}
             >
-              <Pageling genreId={genreId} totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500} />
-              {!isLoading
-                ? tvListByGenre.results.map((movie: tvSeriesData, key = 0) => {
-                  return <Card movieData={movie} type='tv' key={key} />
-                })
-                : ''}
-              <Pageling genreId={genreId} totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500} />
+              <Pageling
+                genreId={genreId}
+                totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500}
+              />
+              {tvListByGenre.results.map((movie: tvSeriesData, key = 0) => {
+                return <Card movieData={movie} type='tv' key={key} />
+              })}
+              <Pageling
+                genreId={genreId}
+                totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500}
+              />
             </Box>
           )}
         </Container>
