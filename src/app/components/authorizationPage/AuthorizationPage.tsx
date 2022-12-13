@@ -12,10 +12,14 @@ export const AuthorizationPage: React.FC = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#1c72ae',
+        backgroundColor: '#212120',
       }}
     >
-      <img src={bigLogo} alt='big-logo' style={{ width: '50%', margin: '20px' }} />
+      <img
+        src={bigLogo}
+        alt='big-logo'
+        style={{ width: '50%', margin: '20px', pointerEvents: 'none' }}
+      />
 
       <AuthorizationCard />
     </Box>

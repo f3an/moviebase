@@ -16,8 +16,9 @@ export const AuthorizationCard: React.FC = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#515251',
         borderRadius: '15px',
+        color: '#fff'
       }}
     >
       <Box
