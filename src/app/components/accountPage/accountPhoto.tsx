@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { upload } from '../../../firebaseConfig'
 import userAvatar from '../../assets/avatarUser.jpg'
 import { useNavigate } from 'react-router-dom'
@@ -19,12 +19,12 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
   const hendleClick = async () => {
     if (photo && user) {
       await upload(photo, user, setIsLoading)
-      await navigate(0)
+      navigate(0)
     }
   }
 
   return (
-    <>
+    <Box>
       <img
         src={user ? (user.photoURL == null ? userAvatar : user.photoURL) : userAvatar}
         alt='user-avatar'
@@ -34,6 +34,6 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
       <Button disabled={isLoading || !photo} onClick={hendleClick}>
         upload
       </Button>
-    </>
+    </Box>
   )
 }

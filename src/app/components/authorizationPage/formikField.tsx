@@ -11,7 +11,7 @@ type FormikFieldProps = {
 
 export const FormikField: React.FC<FormikFieldProps> = ({ name, label, type }) => {
   return (
-    <Box sx={{ m: 2, backgroundColor: '#f0f0' }}>
+    <Box sx={{ m: 2 }}>
       <Field
         required
         as={TextField}
@@ -19,7 +19,6 @@ export const FormikField: React.FC<FormikFieldProps> = ({ name, label, type }) =
         name={name}
         label={label}
         type={type}
-        variant='filled'
         helperText={<ErrorMessage name={name} />}
       />
     </Box>
