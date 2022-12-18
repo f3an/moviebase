@@ -38,7 +38,7 @@ export const TrendingMoviesPage: React.FC = () => {
     >
       <Box sx={{ backgroundColor: '#27272787' }}>
         <Container>
-          {isLoading ? (
+          {isLoading || movies == undefined ? (
             <Backdrop
               sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={isLoading}
@@ -47,7 +47,7 @@ export const TrendingMoviesPage: React.FC = () => {
             </Backdrop>
           ) : (
             <Box
-              style={{
+              sx={{
                 height: '100%',
                 paddingTop: '100px',
                 display: 'flex',
@@ -56,7 +56,7 @@ export const TrendingMoviesPage: React.FC = () => {
               }}
             >
               <Pageling />
-              {!isLoading
+              {!isLoading && movies
                 ? movies.map((movie: movieData, key = 0) => {
                   return <Card type='movie' movieData={movie} key={key} />
                 })

@@ -18,18 +18,21 @@ export const HeaderAuthButton: React.FC = () => {
   })
 
   return (
-    <Box sx={{ display: 'flex', width: '20%', justifyContent: 'center' }}>
+    <Box sx={{ display: 'flex', width: '17%', justifyContent: 'center' }}>
       {user ? (
         <Link
           to='/account'
           style={{
             textDecoration: 'none',
+            padding: '5px',
             color: '#fff',
             display: 'flex',
             width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
-            gap: '5px'
+            gap: '5px',
+            border: ' 1px solid white',
+            borderRadius: '5px'
           }}
         >
           <img
@@ -37,7 +40,7 @@ export const HeaderAuthButton: React.FC = () => {
             alt='user-avatar'
             style={{ width: '35px', height: '35px', borderRadius: '50%' }}
           />
-          <Typography>{user.email}</Typography>
+          <Typography variant='body2'>{user.email}</Typography>
         </Link>
       ) : (
         <Link to='/authorization' style={{ textDecoration: 'none', color: 'white' }}>

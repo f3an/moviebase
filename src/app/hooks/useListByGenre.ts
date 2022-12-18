@@ -1,40 +1,38 @@
 import { useEffect, useState } from 'react'
+import { useAppSelector } from '../store/hooks'
+import { selectGenreIdValue, selectGenrePage } from '../store/storeSlices/genreReducerSlice'
 
-export const useListByGenre = (
-  type: string,
-  genreId: number,
-  page: number,
-): [movieDataList, boolean, string] => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [movieListByGenre, setMovieListByGenre] = useState<movieDataList>({
-    results: [],
-    total_pages: 0,
-  })
+export const useListByGenre = (type: string): [movieDataList | undefined, boolean, string] => {
+  const genreId = useAppSelector(selectGenreIdValue)
+  const page = useAppSelector(selectGenrePage)
+  const [isLoading, setIsLoading] = useState(true)
+  const [movieListByGenre, setMovieListByGenre] = useState<movieDataList>()
   const [error, setError] = useState('')
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       setIsLoading(true)
-      const url = `${process.env.REACT_APP_TMDB_DEFAULT_URL ?? ''}discover/${type}?api_key=${
-        process.env.REACT_APP_API_KEY_TMDB ?? 'API KEY'
-      }&with_genres=${genreId}&page=${page}`
+      if (genreId !== 0) {
+        const url = `${process.env.REACT_APP_TMDB_DEFAULT_URL ?? ''}discover/${type}?api_key=${
+          process.env.REACT_APP_API_KEY_TMDB ?? 'API KEY'
+        }&with_genres=${genreId}&page=${page}`
 
-      try {
-        const response = await fetch(url)
-        if (response.status === 200) {
-          const data: movieDataList = await response.json()
-          await setMovieListByGenre(data)
+        try {
+          const response = await fetch(url)
+          if (response.status === 200) {
+            const data: movieDataList = await response.json()
+            setMovieListByGenre(data)
+          }
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            setError(`There has been a problem with your fetch operation: ${error.message}`)
+          }
         }
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          setError(`There has been a problem with your fetch operation: ${error.message}`)
-        }
-      } finally {
-        setIsLoading(false)
       }
     }
 
     void fetchData()
+    setIsLoading(false)
   }, [genreId, page, type])
 
   return [movieListByGenre, isLoading, error]
@@ -58,7 +56,7 @@ type movieData = {
   tagline: string
 }
 
-interface movieDataList {
+type movieDataList = {
   results: movieData[]
   total_pages: number
 }

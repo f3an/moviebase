@@ -17,14 +17,14 @@ export const useGenres = (type: string): [genres[] | undefined, boolean, string]
 
         if (response.status === 200) {
           const data: response = await response.json()
-          await setGenres(data.genres)
+          setGenres(data.genres)
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
-          await setError(`There has been a problem with your fetch operation: ${error.message}`)
+          setError(`There has been a problem with your fetch operation: ${error.message}`)
         }
       } finally {
-        await setIsLoading(false)
+        setIsLoading(false)
       }
     }
 

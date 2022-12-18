@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
+import { useAppSelector } from '../store/hooks'
+import { selectTvSeriesIdValue } from '../store/storeSlices/tvSeriesReducerSlice'
 
-export const useTvSeries = (iD: number): [tvSeriesData | undefined, boolean, string] => {
+export const useTvSeries = (): [tvSeriesData | undefined, boolean, string] => {
+  const tvSeriesId = useAppSelector(selectTvSeriesIdValue)
   const [isLoading, setIsLoading] = useState(false)
   const [movieData, setMovieData] = useState<tvSeriesData>()
   const [error, setError] = useState('')
@@ -9,7 +12,7 @@ export const useTvSeries = (iD: number): [tvSeriesData | undefined, boolean, str
     const fetchData = async (): Promise<void> => {
       setIsLoading(true)
 
-      const url = `${process.env.REACT_APP_TMDB_DEFAULT_URL ?? ''}tv/${iD}?api_key=${
+      const url = `${process.env.REACT_APP_TMDB_DEFAULT_URL ?? ''}tv/${tvSeriesId}?api_key=${
         process.env.REACT_APP_API_KEY_TMDB ?? 'API KEY'
       }&language=en-US`
 
@@ -17,19 +20,19 @@ export const useTvSeries = (iD: number): [tvSeriesData | undefined, boolean, str
         const response = await fetch(url)
         const data: tvSeriesData = await response.json()
         if (response.status === 200) {
-          await setMovieData(data)
+          setMovieData(data)
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
-          await setError(`There has been a problem with your fetch operation: ${error.message}`)
+          setError(`There has been a problem with your fetch operation: ${error.message}`)
         }
       } finally {
-        await setIsLoading(false)
+        setIsLoading(false)
       }
     }
 
     void fetchData()
-  }, [iD])
+  }, [tvSeriesId])
 
   return [movieData, isLoading, error]
 }

@@ -10,7 +10,7 @@ export const MainPage: React.FC = () => {
   const [focusedMovie, setFocusedMovie] = useState<movieData>()
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && movies) {
       setFocusedMovie(movies[0])
     }
   }, [movies, isLoading])
@@ -40,7 +40,7 @@ export const MainPage: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        {!isLoading && focusedMovie !== undefined ? (
+        {!isLoading && movies !== undefined && focusedMovie !== undefined ? (
           <Box
             sx={{
               display: 'flex',

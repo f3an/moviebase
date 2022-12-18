@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const useSearch = (query: string, page: number): [movieData[], boolean, string] => {
+export const useSearch = (query: string, page: number): [movieData[] | undefined, boolean, string] => {
   const [movies, setMovies] = useState<movieData[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
@@ -15,14 +15,14 @@ export const useSearch = (query: string, page: number): [movieData[], boolean, s
         const response = await fetch(url)
         const data: movieDataList = await response.json()
         if (response.status === 200) {
-          await setMovies(data.results)
+          setMovies(data.results)
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
-          await setError(`There has been a problem with your fetch operation: ${error.message}`)
+          setError(`There has been a problem with your fetch operation: ${error.message}`)
         }
       } finally {
-        await setIsLoading(false)
+        setIsLoading(false)
       }
     }
     void fetchData()

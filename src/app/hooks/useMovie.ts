@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
+import { useAppSelector } from '../store/hooks'
+import { selectMovieIdValue } from '../store/storeSlices/movieReducerSlice'
 
-export const useMovie = (movieId: number): [movieData | undefined, boolean, string] => {
+export const useMovie = (): [movieData | undefined, boolean, string] => {
+  const movieId = useAppSelector(selectMovieIdValue)
   const [isLoading, setIsLoading] = useState(false)
   const [movieData, setMovieData] = useState<movieData>()
   const [error, setError] = useState('')
@@ -17,14 +20,14 @@ export const useMovie = (movieId: number): [movieData | undefined, boolean, stri
         const response = await fetch(url)
         const data: movieData = await response.json()
         if (response.status === 200) {
-          await setMovieData(data)
+          setMovieData(data)
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
-          await setError(`There has been a problem with your fetch operation: ${error.message}`)
+          setError(`There has been a problem with your fetch operation: ${error.message}`)
         }
       } finally {
-        await setIsLoading(false)
+        setIsLoading(false)
       }
     }
 
