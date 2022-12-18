@@ -2,8 +2,8 @@ import React from 'react'
 import { Box } from '@mui/material'
 import { useVideos } from '../../hooks/useVideos'
 
-export const MoviePageTrailers: React.FC<{ movieId: number }> = ({ movieId }) => {
-  const [videos] = useVideos(movieId)
+export const MoviePageTrailers: React.FC = () => {
+  const [videos] = useVideos()
 
   const getTrailerLink = () => {
     const trailers: string[] = []

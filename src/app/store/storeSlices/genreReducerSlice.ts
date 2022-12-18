@@ -4,7 +4,7 @@ import type { RootState } from '../store'
 export const genreSlice = createSlice({
   name: 'genre',
   initialState: {
-    genreIdValue: 1,
+    genreIdValue: 0,
     genre: '',
     page: 1,
   },

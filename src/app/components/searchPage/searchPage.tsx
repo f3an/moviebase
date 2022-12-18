@@ -41,22 +41,28 @@ export const SearchPage: React.FC = () => {
         color: '#fff',
       }}
     >
-      {!isLoading ? (
+      {!isLoading || movies !== undefined ? (
         <Box sx={{ backgroundColor: '#27272787' }}>
           <Container>
-            <Box
-              style={{
-                minHeight: '100vh',
-                paddingTop: '100px',
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-              }}
-            >
-              {movies.map((movie: movieData, key) => {
-                return <Card type='movie' movieData={movie} key={key} />
-              })}
-            </Box>
+            <>
+              {!isLoading && movies ? (
+                <Box
+                  sx={{
+                    minHeight: '100vh',
+                    paddingTop: '100px',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {movies.map((movie: movieData, key) => {
+                    return <Card type='movie' movieData={movie} key={key} />
+                  })}
+                </Box>
+              ) : (
+                ''
+              )}
+            </>
           </Container>
         </Box>
       ) : (

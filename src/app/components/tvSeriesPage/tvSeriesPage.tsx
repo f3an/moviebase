@@ -15,7 +15,7 @@ export const TvSeriesPage: React.FC = () => {
   const dispatch = useAppDispatch()
   const tvSeriesId = useAppSelector(selectTvSeriesIdValue)
 
-  const [tvSeriesData, isLoading] = useTvSeries(tvSeriesId)
+  const [tvSeriesData, isLoading] = useTvSeries()
 
   useEffect(() => {
     if (location.tvSeriesId !== undefined && tvSeriesId !== Number(location.tvSeriesId)) {
@@ -48,7 +48,7 @@ export const TvSeriesPage: React.FC = () => {
             }}
           >
             <TvSeriesPageDescription tvSeriesData={tvSeriesData} />
-            <MoviePageTrailers movieId={tvSeriesId} />
+            <MoviePageTrailers />
           </Box>
         ) : (
           <Backdrop

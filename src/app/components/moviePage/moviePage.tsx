@@ -12,7 +12,7 @@ export const MoviePage: React.FC = () => {
   const dispatch = useAppDispatch()
   const movieId = useAppSelector(selectMovieIdValue)
 
-  const [movieData, isLoading] = useMovie(movieId)
+  const [movieData, isLoading] = useMovie()
 
   useEffect(() => {
     if (location !== undefined && movieId !== Number(location)) {
@@ -45,7 +45,7 @@ export const MoviePage: React.FC = () => {
             }}
           >
             <MoviePageDescription movieData={movieData} />
-            <MoviePageTrailers movieId={movieId} />
+            <MoviePageTrailers />
           </Box>
         ) : (
           <Backdrop

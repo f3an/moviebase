@@ -19,8 +19,8 @@ export const TvSeriesByGenrePage: React.FC = () => {
   const dispatch = useAppDispatch()
   const page = useAppSelector(selectGenrePage)
   const genreId = useAppSelector(selectGenreIdValue)
-  const [tvListByGenre, isLoading] = useListByGenre('tv', genreId, page)
-  const backdrop = useBackdrop(tvListByGenre.results)
+  const [tvListByGenre, isLoading] = useListByGenre('tv')
+  const backdrop = useBackdrop(tvListByGenre?.results)
 
   useEffect(() => {
     if (
@@ -30,7 +30,7 @@ export const TvSeriesByGenrePage: React.FC = () => {
       dispatch(changeGenreIdValue(Number(location.genreId)))
       dispatch(changePage(Number(location.page)))
     }
-  }, [location, dispatch, tvListByGenre, page, genreId, isLoading])
+  }, [location, dispatch, page, genreId, isLoading])
 
   return (
     <Box
@@ -44,7 +44,7 @@ export const TvSeriesByGenrePage: React.FC = () => {
     >
       <Box sx={{ backgroundColor: '#27272787' }}>
         <Container>
-          {isLoading ? (
+          {isLoading || tvListByGenre == undefined ? (
             <Backdrop
               sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={isLoading}
@@ -52,27 +52,33 @@ export const TvSeriesByGenrePage: React.FC = () => {
               <CircularProgress color='inherit' />
             </Backdrop>
           ) : (
-            <Box
-              style={{
-                minHeight: '100vh',
-                paddingTop: '100px',
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-              }}
-            >
-              <Pageling
-                genreId={genreId}
-                totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500}
-              />
-              {tvListByGenre.results.map((movie: tvSeriesData, key = 0) => {
-                return <Card movieData={movie} type='tv' key={key} />
-              })}
-              <Pageling
-                genreId={genreId}
-                totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500}
-              />
-            </Box>
+            <>
+              {!isLoading && tvListByGenre ? (
+                <Box
+                  sx={{
+                    minHeight: '100vh',
+                    paddingTop: '100px',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Pageling
+                    genreId={genreId}
+                    totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500}
+                  />
+                  {tvListByGenre.results.map((movie: tvSeriesData, key = 0) => {
+                    return <Card movieData={movie} type='tv' key={key} />
+                  })}
+                  <Pageling
+                    genreId={genreId}
+                    totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500}
+                  />
+                </Box>
+              ) : (
+                ''
+              )}
+            </>
           )}
         </Container>
       </Box>
