@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react'
 import { Backdrop, Box, CircularProgress } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import { TvSeriesPageDescription } from './tvSeriesPageDescription'
 import { MoviePageTrailers } from './tvSeriesPageTrailers'
 import {
   changeTvSeriesIdValue,
   selectTvSeriesIdValue,
 } from '../../store/storeSlices/tvSeriesReducerSlice'
-import { useTvSeries } from '../../hooks/useTvSeries'
+import { useGetTvSeriesByIdQuery } from '../../store/services/tmdbApi'
 
 export const TvSeriesPage: React.FC = () => {
   const location = useParams()
   const dispatch = useAppDispatch()
   const tvSeriesId = useAppSelector(selectTvSeriesIdValue)
 
-  const [tvSeriesData, isLoading] = useTvSeries()
+  const { data, isLoading } = useGetTvSeriesByIdQuery(tvSeriesId)
 
   useEffect(() => {
     if (location.tvSeriesId !== undefined && tvSeriesId !== Number(location.tvSeriesId)) {
@@ -23,7 +23,7 @@ export const TvSeriesPage: React.FC = () => {
     }
   }, [location, dispatch, tvSeriesId])
 
-  const backdrop = `url(${process.env.REACT_APP_TMDB_BACKDROP_IMAGE_URL}${tvSeriesData?.backdrop_path})`
+  const backdrop = `url(${process.env.REACT_APP_TMDB_BACKDROP_IMAGE_URL}${data?.backdrop_path})`
 
   return (
     <>
@@ -36,7 +36,7 @@ export const TvSeriesPage: React.FC = () => {
           color: '#fff',
         }}
       >
-        {!isLoading && tvSeriesData ? (
+        {!isLoading && data ? (
           <Box
             sx={{
               paddingTop: '100px',
@@ -47,8 +47,8 @@ export const TvSeriesPage: React.FC = () => {
               flexDirection: 'column',
             }}
           >
-            <TvSeriesPageDescription tvSeriesData={tvSeriesData} />
-            <MoviePageTrailers />
+            <TvSeriesPageDescription tvSeriesData={data} />
+            <MoviePageTrailers tvSeriesId={tvSeriesId} />
           </Box>
         ) : (
           <Backdrop

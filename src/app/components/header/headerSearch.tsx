@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { Box, IconButton } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import { changeSearchRequest, selectSearchRequest } from '../../store/storeSlices/searchSlice'
 import { useNavigate } from 'react-router-dom'
 

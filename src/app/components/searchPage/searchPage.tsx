@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Backdrop, Box, CircularProgress } from '@mui/material'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import {
   changePage,
   changeSearchRequest,
@@ -8,18 +8,18 @@ import {
   selectSearchRequest,
 } from '../../store/storeSlices/searchSlice'
 import { useParams } from 'react-router-dom'
-import { useSearch } from '../../hooks/useSearch'
 import Card from '../card/Card'
 import { Container } from '@mui/system'
 import { useBackdrop } from '../../hooks/useBackdrop'
+import { useSearchQuery } from '../../store/services/tmdbApi'
 
 export const SearchPage: React.FC = () => {
   const location = useParams()
   const searchRequest = useAppSelector(selectSearchRequest)
   const searchPage = useAppSelector(selectPage)
   const dispatch = useAppDispatch()
-  const [movies, isLoading] = useSearch(searchRequest, searchPage)
-  const backdrop = useBackdrop(movies)
+  const { data, isLoading } = useSearchQuery({ query: searchRequest, page: searchPage })
+  const backdrop = useBackdrop(data?.results)
 
   useEffect(() => {
     if (
@@ -41,11 +41,11 @@ export const SearchPage: React.FC = () => {
         color: '#fff',
       }}
     >
-      {!isLoading || movies !== undefined ? (
+      {!isLoading || data !== undefined ? (
         <Box sx={{ backgroundColor: '#27272787' }}>
           <Container>
             <>
-              {!isLoading && movies ? (
+              {!isLoading && data ? (
                 <Box
                   sx={{
                     minHeight: '100vh',
@@ -55,7 +55,7 @@ export const SearchPage: React.FC = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  {movies.map((movie: movieData, key) => {
+                  {data.results.map((movie: movieData, key) => {
                     return <Card type='movie' movieData={movie} key={key} />
                   })}
                 </Box>

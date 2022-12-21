@@ -2,7 +2,7 @@ import React from 'react'
 import { ArrowBack, ArrowForward, KeyboardTab } from '@mui/icons-material'
 import { Box, IconButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import {
   changePage,
   decrementPage,

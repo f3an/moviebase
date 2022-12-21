@@ -1,14 +1,16 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { useVideos } from '../../hooks/useVideos'
+import { useGetVideosByTvSeriesIdQuery } from '../../store/services/tmdbApi'
 
-export const MoviePageTrailers: React.FC = () => {
-  const [videos] = useVideos()
+export const MoviePageTrailers: React.FC<{ tvSeriesId: number }> = ({ tvSeriesId }) => {
+  const { data } = useGetVideosByTvSeriesIdQuery(tvSeriesId)
+
+  console.log(data)
 
   const getTrailerLink = () => {
     const trailers: string[] = []
-    if (videos) {
-      for (const element of videos) {
+    if (data) {
+      for (const element of data.results) {
         if (element.name === 'Official Trailer' || element.type === 'Trailer') {
           trailers.push(`https://www.youtube.com/embed/${element.key}`)
         }
@@ -18,7 +20,7 @@ export const MoviePageTrailers: React.FC = () => {
   }
   return (
     <>
-      {videos?.length === 0 ? (
+      {data?.results.length === 0 ? (
         <></>
       ) : (
         <Box sx={{ width: '100%', marginY: '50px', display: 'flex', justifyContent: 'center' }}>

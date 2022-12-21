@@ -7,24 +7,23 @@ import {
 } from '../../store/storeSlices/popularMoviesReducerSlice'
 import { Backdrop, Box, CircularProgress } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { usePopularMovies } from '../../hooks/useTrendingMoives'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import { Pageling } from './pageling'
 import { useBackdrop } from '../../hooks/useBackdrop'
+import { useGetTrandingMoviesQuery } from '../../store/services/tmdbApi'
 
 export const TrendingMoviesPage: React.FC = () => {
   const location = useParams().page
   const dispatch = useAppDispatch()
   const page = useAppSelector(selectPopularMoviesPage)
-  const [movies, isLoading] = usePopularMovies(page)
-
-  const backdrop = useBackdrop(movies)
+  const { data, isLoading } = useGetTrandingMoviesQuery(page)
+  const backdrop = useBackdrop(data?.results)
 
   useEffect(() => {
     if (location !== undefined && page !== Number(location)) {
       dispatch(changePage(Number(location)))
     }
-  }, [location, dispatch, movies, page])
+  }, [location, dispatch, page])
 
   return (
     <Box
@@ -38,7 +37,7 @@ export const TrendingMoviesPage: React.FC = () => {
     >
       <Box sx={{ backgroundColor: '#27272787' }}>
         <Container>
-          {isLoading || movies == undefined ? (
+          {isLoading && data == undefined ? (
             <Backdrop
               sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={isLoading}
@@ -56,8 +55,8 @@ export const TrendingMoviesPage: React.FC = () => {
               }}
             >
               <Pageling />
-              {!isLoading && movies
-                ? movies.map((movie: movieData, key = 0) => {
+              {!isLoading && data
+                ? data.results.map((movie: movieData, key = 0) => {
                   return <Card type='movie' movieData={movie} key={key} />
                 })
                 : ''}
