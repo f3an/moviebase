@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { Backdrop, Box, CircularProgress } from '@mui/material'
-import { usePopularMovies } from '../../hooks/useTrendingMoives'
+import { useGetTrandingMoviesQuery } from '../../store/services/tmdbApi'
 import { MainCarousel } from './mainCarousel'
 import { MainMovie } from './mainMovie'
 
 export const MainPage: React.FC = () => {
-  const [movies, isLoading] = usePopularMovies(1)
+  const { data, isLoading } = useGetTrandingMoviesQuery(1)
 
   const [focusedMovie, setFocusedMovie] = useState<movieData>()
 
   useEffect(() => {
-    if (!isLoading && movies) {
-      setFocusedMovie(movies[0])
+    if (!isLoading && data?.results) {
+      setFocusedMovie(data.results[0])
     }
-  }, [movies, isLoading])
+  }, [data, isLoading])
 
   const heandlerCardClick = (movieData: movieData) => {
     setFocusedMovie(movieData)
@@ -40,7 +40,7 @@ export const MainPage: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        {!isLoading && movies !== undefined && focusedMovie !== undefined ? (
+        {!isLoading && data !== undefined && focusedMovie !== undefined ? (
           <Box
             sx={{
               display: 'flex',
@@ -52,7 +52,7 @@ export const MainPage: React.FC = () => {
           >
             <MainMovie movieData={focusedMovie} />
             <MainCarousel
-              movies={movies}
+              movies={data.results}
               focusedMovie={focusedMovie}
               clickCardEvent={heandlerCardClick}
             />

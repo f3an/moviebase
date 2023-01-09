@@ -3,9 +3,9 @@ import { Container } from '@mui/system'
 import Card from '../card/Card'
 import { Backdrop, Box, CircularProgress } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import { Pageling } from './pageling'
-import { useListByGenre } from '../../hooks/useListByGenre'
+import { useGetListByGenreQuery } from '../../store/services/tmdbApi'
 import {
   changeGenreIdValue,
   changePage,
@@ -19,8 +19,8 @@ export const TvSeriesByGenrePage: React.FC = () => {
   const dispatch = useAppDispatch()
   const page = useAppSelector(selectGenrePage)
   const genreId = useAppSelector(selectGenreIdValue)
-  const [tvListByGenre, isLoading] = useListByGenre('tv')
-  const backdrop = useBackdrop(tvListByGenre?.results)
+  const { data, isLoading } = useGetListByGenreQuery({ type: 'tv', genreId, page })
+  const backdrop = useBackdrop(data?.results)
 
   useEffect(() => {
     if (
@@ -44,7 +44,7 @@ export const TvSeriesByGenrePage: React.FC = () => {
     >
       <Box sx={{ backgroundColor: '#27272787' }}>
         <Container>
-          {isLoading || tvListByGenre == undefined ? (
+          {isLoading || data == undefined ? (
             <Backdrop
               sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={isLoading}
@@ -53,7 +53,7 @@ export const TvSeriesByGenrePage: React.FC = () => {
             </Backdrop>
           ) : (
             <>
-              {!isLoading && tvListByGenre ? (
+              {!isLoading && data ? (
                 <Box
                   sx={{
                     minHeight: '100vh',
@@ -65,14 +65,14 @@ export const TvSeriesByGenrePage: React.FC = () => {
                 >
                   <Pageling
                     genreId={genreId}
-                    totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500}
+                    totalPages={data.total_pages <= 500 ? data.total_pages : 500}
                   />
-                  {tvListByGenre.results.map((movie: tvSeriesData, key = 0) => {
+                  {data.results.map((movie: tvSeriesData, key = 0) => {
                     return <Card movieData={movie} type='tv' key={key} />
                   })}
                   <Pageling
                     genreId={genreId}
-                    totalPages={tvListByGenre.total_pages <= 500 ? tvListByGenre.total_pages : 500}
+                    totalPages={data.total_pages <= 500 ? data.total_pages : 500}
                   />
                 </Box>
               ) : (

@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react'
-import { useMovie } from '../../hooks/useMovie'
 import { Backdrop, Box, CircularProgress } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import { changeMovieIdValue, selectMovieIdValue } from '../../store/storeSlices/movieReducerSlice'
 import { MoviePageDescription } from './moviePageDescription'
 import { MoviePageTrailers } from './moviePageTrailers'
+import { useGetMovieByIdQuery } from '../../store/services/tmdbApi'
 
 export const MoviePage: React.FC = () => {
   const location = useParams()?.movieId
   const dispatch = useAppDispatch()
   const movieId = useAppSelector(selectMovieIdValue)
 
-  const [movieData, isLoading] = useMovie()
+  const { data, isLoading } = useGetMovieByIdQuery(movieId)
 
   useEffect(() => {
     if (location !== undefined && movieId !== Number(location)) {
@@ -20,7 +20,7 @@ export const MoviePage: React.FC = () => {
     }
   }, [location, dispatch, movieId])
 
-  const backdrop = `url(${process.env.REACT_APP_TMDB_BACKDROP_IMAGE_URL}${movieData?.backdrop_path})`
+  const backdrop = `url(${process.env.REACT_APP_TMDB_BACKDROP_IMAGE_URL}${data?.backdrop_path})`
 
   return (
     <>
@@ -33,7 +33,7 @@ export const MoviePage: React.FC = () => {
           color: '#fff',
         }}
       >
-        {!isLoading && movieData ? (
+        {!isLoading && data ? (
           <Box
             sx={{
               paddingTop: '100px',
@@ -44,8 +44,8 @@ export const MoviePage: React.FC = () => {
               flexDirection: 'column',
             }}
           >
-            <MoviePageDescription movieData={movieData} />
-            <MoviePageTrailers />
+            <MoviePageDescription movieData={data} />
+            <MoviePageTrailers movieId={movieId}/>
           </Box>
         ) : (
           <Backdrop

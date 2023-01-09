@@ -27,7 +27,7 @@ export async function upload(
     const fileRef = ref(storage, `files/${currentUser.uid}/${file.name}`)
     await uploadBytes(fileRef, file)
     const photoUrl = await getDownloadURL(fileRef)
-    updateProfile(currentUser, { photoURL: photoUrl })
+    await updateProfile(currentUser, { photoURL: photoUrl })
   }
   setIsLoading(false)
 }

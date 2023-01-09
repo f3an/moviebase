@@ -3,9 +3,8 @@ import { Container } from '@mui/system'
 import Card from '../card/Card'
 import { Backdrop, Box, CircularProgress } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import { Pageling } from './pageling'
-import { useListByGenre } from '../../hooks/useListByGenre'
 import {
   changeGenreIdValue,
   changePage,
@@ -13,6 +12,7 @@ import {
   selectGenrePage,
 } from '../../store/storeSlices/genreReducerSlice'
 import { useBackdrop } from '../../hooks/useBackdrop'
+import { useGetListByGenreQuery } from '../../store/services/tmdbApi'
 
 export const MoviesByGenrePage: React.FC = () => {
   const location = useParams()
@@ -21,8 +21,8 @@ export const MoviesByGenrePage: React.FC = () => {
   const page = useAppSelector(selectGenrePage)
   const genreId = useAppSelector(selectGenreIdValue)
 
-  const [movieListByGenre, isLoading] = useListByGenre('movie')
-  const backdrop = useBackdrop(movieListByGenre?.results)
+  const { data, isLoading } = useGetListByGenreQuery({ type: 'movie', genreId, page })
+  const backdrop = useBackdrop(data?.results)
 
   useEffect(() => {
     if (
@@ -46,7 +46,7 @@ export const MoviesByGenrePage: React.FC = () => {
     >
       <Box sx={{ backgroundColor: '#27272787' }}>
         <Container>
-          {isLoading || movieListByGenre === undefined ? (
+          {isLoading || data === undefined ? (
             <Backdrop
               sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={isLoading}
@@ -55,7 +55,7 @@ export const MoviesByGenrePage: React.FC = () => {
             </Backdrop>
           ) : (
             <>
-              {!isLoading && movieListByGenre ? (
+              {!isLoading && data ? (
                 <Box
                   sx={{
                     minHeight: '100vh',
@@ -65,11 +65,11 @@ export const MoviesByGenrePage: React.FC = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  <Pageling genreId={genreId} totalPages={movieListByGenre.total_pages} />
-                  {movieListByGenre.results.map((movie: movieData, key = 0) => {
+                  <Pageling genreId={genreId} totalPages={data.total_pages} />
+                  {data.results.map((movie: movieData, key = 0) => {
                     return <Card type='movie' movieData={movie} key={key} />
                   })}
-                  <Pageling genreId={genreId} totalPages={movieListByGenre.total_pages} />
+                  <Pageling genreId={genreId} totalPages={data.total_pages} />
                 </Box>
               ) : (
                 ''

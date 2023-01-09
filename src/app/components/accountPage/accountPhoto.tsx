@@ -24,7 +24,14 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
   }
 
   return (
-    <Box>
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+      }}
+    >
       <img
         src={user ? (user.photoURL == null ? userAvatar : user.photoURL) : userAvatar}
         alt='user-avatar'
