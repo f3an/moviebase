@@ -9,7 +9,7 @@ export const MainMovie: React.FC<{ movieData: movieData }> = ({ movieData }) => 
       <Box sx={{ position: 'relative', display: 'flex', m: 2 }}>
         <Link to={`/movie/${movieData.id}`} style={{ textDecoration: 'none', color: '#fff' }}>
           <img
-            style={{ width: '300px', borderRadius: '8px' }}
+            style={{ width: '350px', borderRadius: '8px' }}
             src={`${process.env.REACT_APP_TMDB_IMAGE_URL}${movieData.poster_path}`}
             alt={`poster ${movieData.original_title}`}
             className='poster'
