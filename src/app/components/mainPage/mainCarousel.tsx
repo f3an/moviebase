@@ -6,7 +6,7 @@ export const MainCarousel: React.FC<props> = ({ movies, focusedMovie, clickCardE
   return (
     <Box
       sx={{
-        height: '100%',
+        height: '450px',
         maxWidth: '20%',
         color: '#fff',
         overflowX: 'hidden',

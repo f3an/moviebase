@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Backdrop, Box, CircularProgress } from '@mui/material'
+import { Backdrop, Box, CircularProgress, Typography } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import {
   changePage,
@@ -44,25 +44,36 @@ export const SearchPage: React.FC = () => {
       {!isLoading || data !== undefined ? (
         <Box sx={{ backgroundColor: '#27272787' }}>
           <Container>
-            <>
-              {!isLoading && data ? (
-                <Box
-                  sx={{
-                    minHeight: '100vh',
-                    paddingTop: '100px',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {data.results.map((movie: movieData, key) => {
-                    return <Card type='movie' movieData={movie} key={key} />
-                  })}
-                </Box>
-              ) : (
-                ''
-              )}
-            </>
+            {!isLoading && data && data?.results.length > 0 ? (
+              <Box
+                sx={{
+                  minHeight: '100vh',
+                  width: '100%',
+                  padding: '50px',
+                  paddingTop: '100px',
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                  gap: '20px',
+                }}
+              >
+                {data.results.map((movie: movieData, key) => {
+                  return <Card type='movie' movieData={movie} key={key} />
+                })}
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  minHeight: '100vh',
+                  paddingTop: '100px',
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                }}
+              >
+                <Typography>No Results</Typography>
+              </Box>
+            )}
           </Container>
         </Box>
       ) : (

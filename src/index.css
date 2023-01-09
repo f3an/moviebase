@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  height: calc(100vh + 10px);
+  height: 100vh;
 }
 #root {
   margin: 0;
