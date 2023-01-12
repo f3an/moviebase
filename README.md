@@ -25,10 +25,17 @@ https://moviebase.com.ua
 ---------
 ## Technologies used for:
 
-ReactJS all frontend stuff works on it 
+ReactJS all frontend stuff works on it
+
 TypeScript used for typezation of response objects
+
 Redux used for manage state of components and Redux RTK used for fetchin data from API
+
 Firebase Auth, Firebase store all of this help with user`s data and verification. Additionally, Firebase Realtime DB is used for the commenting engine
+
 Mui framework what helps with styles of app
+
 React Router DOM used to routing components
+
 TMDB api where we takes data about movies
+
