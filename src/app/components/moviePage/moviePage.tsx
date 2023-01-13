@@ -6,6 +6,7 @@ import { changeMovieIdValue, selectMovieIdValue } from '../../store/storeSlices/
 import { MoviePageDescription } from './moviePageDescription'
 import { MoviePageTrailers } from './moviePageTrailers'
 import { useGetMovieByIdQuery } from '../../store/services/tmdbApi'
+import { MoviePageComments } from './moivePageComments'
 
 export const MoviePage: React.FC = () => {
   const location = useParams()?.movieId
@@ -45,7 +46,8 @@ export const MoviePage: React.FC = () => {
             }}
           >
             <MoviePageDescription movieData={data} />
-            <MoviePageTrailers movieId={movieId}/>
+            <MoviePageTrailers movieId={movieId} />
+            <MoviePageComments />
           </Box>
         ) : (
           <Backdrop
