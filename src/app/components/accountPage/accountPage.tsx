@@ -1,25 +1,13 @@
-import React, { useState } from 'react'
-import { onAuthStateChanged, signOut, User } from 'firebase/auth'
-import { auth } from '../../../firebaseConfig'
+import React from 'react'
 import { Box } from '@mui/system'
 import { Button, Container, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { AccountPhoto } from './accountPhoto'
+import { useUserContext } from '../../context/userContext'
 
 export const AccountPage: React.FC = () => {
-  const [user, setUser] = useState<User>()
   const navigate = useNavigate()
-
-  onAuthStateChanged(auth, (currentUser: User | null): void => {
-    if (currentUser) {
-      setUser(currentUser)
-    }
-  })
-
-  const logout = async (): Promise<void> => {
-    await signOut(auth)
-    navigate('/')
-  }
+  const { user, logOut } = useUserContext()
 
   return (
     <Box
@@ -52,8 +40,9 @@ export const AccountPage: React.FC = () => {
               <Typography>user logged in: {user?.email}</Typography>
               <Button
                 variant='contained'
-                onClick={() => {
-                  void logout()
+                onClick={async () => {
+                  await logOut()
+                  navigate('/')
                 }}
               >
                 Logout

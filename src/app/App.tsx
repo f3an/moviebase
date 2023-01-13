@@ -19,6 +19,7 @@ import { TvSeriesPage } from './components/tvSeriesPage/tvSeriesPage'
 import { ThemeProvider } from '@mui/material'
 import { theme } from './theme'
 import { ScrollToTop } from './hooks/useScrollOnTop'
+import { UserContextProvider } from './context/userContext'
 
 function App() {
   const [isFirstTimeOpen, setIsFirstTimeOpen] = useState(true)
@@ -28,28 +29,30 @@ function App() {
   }, 2300)
 
   return (
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <ScrollToTop />
-          {isFirstTimeOpen ? <MoviebaseAnimatedLogo /> : ''}
-          <Header />
-          <Routes>
-            <Route path='/' element={<MainPage />} />
-            <Route path='/trending/:page' element={<TrendingMoviesPage />} />
-            <Route path='/movie/genre/:genreId/:page' element={<MoviesByGenrePage />} />
-            <Route path='/tv/genre/:genreId/:page' element={<TvSeriesByGenrePage />} />
-            <Route path='/movie/:movieId' element={<MoviePage />} />
-            <Route path='/tv/:tvSeriesId' element={<TvSeriesPage />} />
-            <Route path='/account' element={<AccountPage />} />
-            <Route path='/authorization' element={<AuthorizationPage />} />
-            <Route path='/authorization/forgot' element={<ForgotPasswordPage />} />
-            <Route path='/search/:searchRequest/:page' element={<SearchPage />} />
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </Provider>
-    </ThemeProvider>
+    <UserContextProvider>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <BrowserRouter>
+            <ScrollToTop />
+            {isFirstTimeOpen ? <MoviebaseAnimatedLogo /> : ''}
+            <Header />
+            <Routes>
+              <Route path='/' element={<MainPage />} />
+              <Route path='/trending/:page' element={<TrendingMoviesPage />} />
+              <Route path='/movie/genre/:genreId/:page' element={<MoviesByGenrePage />} />
+              <Route path='/tv/genre/:genreId/:page' element={<TvSeriesByGenrePage />} />
+              <Route path='/movie/:movieId' element={<MoviePage />} />
+              <Route path='/tv/:tvSeriesId' element={<TvSeriesPage />} />
+              <Route path='/account' element={<AccountPage />} />
+              <Route path='/authorization' element={<AuthorizationPage />} />
+              <Route path='/authorization/forgot' element={<ForgotPasswordPage />} />
+              <Route path='/search/:searchRequest/:page' element={<SearchPage />} />
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </Provider>
+      </ThemeProvider>
+    </UserContextProvider>
   )
 }
 

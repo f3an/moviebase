@@ -1,21 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import KeyIcon from '@mui/icons-material/Key'
-import { onAuthStateChanged, User } from 'firebase/auth'
-import { auth } from '../../../firebaseConfig'
 import userAvatar from '../../assets/avatarUser.jpg'
+import { useUserContext } from '../../context/userContext'
 
 export const HeaderAuthButton: React.FC = () => {
-  const [user, setUser] = useState<User>()
-
-  onAuthStateChanged(auth, (currentUser: User | null): void => {
-    if (currentUser) {
-      setUser(currentUser)
-    } else {
-      setUser(undefined)
-    }
-  })
+  const { user } = useUserContext()
 
   return (
     <Box sx={{ display: 'flex', width: '17%', justifyContent: 'center' }}>
@@ -32,7 +23,7 @@ export const HeaderAuthButton: React.FC = () => {
             alignItems: 'center',
             gap: '5px',
             border: ' 1px solid white',
-            borderRadius: '5px'
+            borderRadius: '5px',
           }}
         >
           <img
