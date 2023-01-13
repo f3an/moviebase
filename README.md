@@ -9,7 +9,7 @@ Links:
 https://moviebaseua.netlify.app,
 https://moviebase.com.ua
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/ceffa93b-5b35-4649-9021-377d8efe9157/deploy-status)](https://app.netlify.com/sites/moviebaseua/deploys)
+![Netlify Status](https://api.netlify.com/api/v1/badges/ceffa93b-5b35-4649-9021-377d8efe9157/deploy-status)
 
 ------
 
