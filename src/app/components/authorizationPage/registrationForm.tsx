@@ -3,17 +3,10 @@ import { Box, Button, Typography } from '@mui/material'
 import { Form, Formik } from 'formik'
 import { FormikField } from './formikField'
 import * as Yup from 'yup'
-import {
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  sendEmailVerification,
-  signInWithPopup,
-  User,
-} from 'firebase/auth'
-import { auth } from '../../../firebaseConfig'
 import { useNavigate } from 'react-router-dom'
 import ErrorIcon from '@mui/icons-material/Error'
 import GoogleIcon from '@mui/icons-material/Google'
+import { useUserContext } from '../../context/userContext'
 
 type FormikValues = {
   email: string
@@ -33,15 +26,13 @@ const SignupSchema = Yup.object().shape({
 export const RegistrationForm: React.FC = () => {
   const navigate = useNavigate()
   const [registrationError, setRegistrationError] = useState<string>()
+  const { signUp, logOut, signInWithGoogle } = useUserContext()
 
   const handleSubmit = async (values: FormikValues) => {
     try {
-      await createUserWithEmailAndPassword(auth, values.email, values.password)
-      const currentUser: User | null = auth.currentUser
-      if (currentUser) {
-        await sendEmailVerification(currentUser)
-      }
-      await auth.signOut()
+      await signUp(values)
+      // await sendVerficationEmail()
+      await logOut()
       navigate('/')
     } catch (error: unknown) {
       setRegistrationError('Registration Error')
@@ -50,9 +41,8 @@ export const RegistrationForm: React.FC = () => {
 
   const signInWithGoogleAuth = async () => {
     try {
-      const provider = new GoogleAuthProvider()
+      await signInWithGoogle()
       navigate('/')
-      return signInWithPopup(auth, provider)
     } catch (error) {
       setRegistrationError('Login Error')
     }

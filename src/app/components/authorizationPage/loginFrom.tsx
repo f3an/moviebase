@@ -3,11 +3,10 @@ import { Box, Button, Typography } from '@mui/material'
 import { Form, Formik } from 'formik'
 import { FormikField } from './formikField'
 import * as Yup from 'yup'
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
-import { auth } from '../../../firebaseConfig'
 import { Link, useNavigate } from 'react-router-dom'
 import ErrorIcon from '@mui/icons-material/Error'
 import GoogleIcon from '@mui/icons-material/Google'
+import { useUserContext } from '../../context/userContext'
 
 type FormikValues = {
   email: string
@@ -28,10 +27,11 @@ export const LoginForm: React.FC = () => {
   const navigate = useNavigate()
   const [forgot, setForgot] = useState(false)
   const [loginError, setLoginError] = useState<string>()
+  const { signIn, signInWithGoogle } = useUserContext()
 
   const handleSubmit = async (values: FormikValues) => {
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password)
+      await signIn(values)
       navigate('/')
     } catch (error: unknown) {
       setForgot(true)
@@ -41,9 +41,8 @@ export const LoginForm: React.FC = () => {
 
   const signInWithGoogleAuth = async () => {
     try {
-      const provider = new GoogleAuthProvider()
+      await signInWithGoogle()
       navigate('/')
-      return signInWithPopup(auth, provider)
     } catch (error) {
       setLoginError('Error')
     }
@@ -74,10 +73,7 @@ export const LoginForm: React.FC = () => {
           <FormikField name='email' label='Email' type='email' />
           <FormikField name='password' label='Password' type='password' />
           {forgot ? (
-            <Link
-              to='/authorization/forgot'
-              style={{ textDecoration: 'none', color: 'blue' }}
-            >
+            <Link to='/authorization/forgot' style={{ textDecoration: 'none', color: 'blue' }}>
               <Typography>Forgot Password ?</Typography>
             </Link>
           ) : (
