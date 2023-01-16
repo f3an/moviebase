@@ -6,10 +6,9 @@ Project deployed on Netlify
 
 Links: 
 
-https://moviebaseua.netlify.app,
-https://moviebase.com.ua
+https://moviebaseua.netlify.app, https://moviebase.com.ua
 
-![Netlify Status](https://api.netlify.com/api/v1/badges/ceffa93b-5b35-4649-9021-377d8efe9157/deploy-status)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ceffa93b-5b35-4649-9021-377d8efe9157/deploy-status)](https://moviebase.com.ua)
 
 ------
 
