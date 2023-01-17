@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography, Box } from '@mui/material'
-import { Link } from 'react-router-dom'
 import { useGetGenresQuery } from '../../store/services/tmdbApi'
+import { StyledLink } from './styledLink'
 
 export const HeaderGenresModal: React.FC<{ toggle: () => void; type: string }> = ({
   toggle,
@@ -27,13 +27,9 @@ export const HeaderGenresModal: React.FC<{ toggle: () => void; type: string }> =
       {data?.genres?.map((element) => {
         return (
           <Typography key={element.id} sx={{ m: 1 }}>
-            <Link
-              to={`${type}/genre/${element.id}/1`}
-              style={{ textDecoration: 'none', color: '#fff' }}
-              onClick={toggle}
-            >
+            <StyledLink to={`${type}/genre/${element.id}/1`} onClick={toggle}>
               {element.name}
-            </Link>
+            </StyledLink>
           </Typography>
         )
       })}
