@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import miniLogo from '../../assets/miniLogo.svg'
+import { StyledLink } from './styledLink'
 
 export const HeaderLogo: React.FC = () => {
   return (
@@ -26,9 +27,9 @@ export const HeaderLogo: React.FC = () => {
       >
         <img src={miniLogo} alt='moviebaseIcon' />
       </Link>
-      <Link to='/' style={{ textDecoration: 'none', color: '#e2f1ff' }}>
+      <StyledLink to='/'>
         <Typography>Moviebase</Typography>
-      </Link>
+      </StyledLink>
     </Box>
   )
 }

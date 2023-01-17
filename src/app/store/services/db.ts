@@ -1,20 +1,39 @@
-import { getDatabase, ref, set } from 'firebase/database'
+import { getDatabase, onValue, push, ref, set } from 'firebase/database'
 
-export const writeUserData = async (userId: number) => {
-  const db = getDatabase()
+const db = getDatabase()
+
+export const writeUserData = (userId: number) => {
   const reference = ref(db, 'users/' + userId)
 
   set(reference, { email: `${userId}@gmail.com` })
 }
-export const writeComment = async ({ userId, filmId, comment }: Inputs) => {
-  const db = getDatabase()
-  const reference = ref(db, 'Comments/' + filmId)
+export const writeComment = ({ id, Comment }: Inputs) => {
+  const reference = ref(db, `films/${id}/comments/`)
 
-  set(reference, { userId: userId, comment: comment })
+  push(reference, { userId: Comment.userId, comment: Comment.comment, email: Comment.email })
+}
+
+export const getComments = ({ id }: { id: number }) => {
+  const reference = ref(db, `/films/${id}/comments`)
+  let comments: Comment[] = []
+
+  onValue(reference, (snapshot) => {
+    const data: Comment[] = Object.values(snapshot.val())
+    if (data !== null) {
+      comments = data
+    }
+  })
+
+  return comments
 }
 
 type Inputs = {
+  id: number
+  Comment: Comment
+}
+
+type Comment = {
   userId: string
-  filmId: string
   comment: string
+  email: string
 }

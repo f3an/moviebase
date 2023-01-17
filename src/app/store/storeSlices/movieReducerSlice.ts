@@ -4,7 +4,7 @@ import type { RootState } from '../store'
 export const movieSlice = createSlice({
   name: 'movie',
   initialState: {
-    movieIdValue: 0,
+    movieIdValue: 1337,
   },
   reducers: {
     changeMovieIdValue: (state, data: PayloadAction<number>) => {
