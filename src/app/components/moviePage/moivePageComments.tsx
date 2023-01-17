@@ -1,33 +1,34 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box } from '@mui/system'
-import React, { useState } from 'react'
-import { onAuthStateChanged, User } from 'firebase/auth'
-import { auth } from '../../../firebaseConfig'
-import { Button, TextField } from '@mui/material'
+import React from 'react'
+import { Button, TextField, Typography } from '@mui/material'
+import { useUserContext } from '../../context/userContext'
+import { getDbValues, writeComment } from '../../store/services/db'
 
-export const MoviePageComments = () => {
-  const [user, setUser] = useState<User>()
+export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
+  const { user } = useUserContext()
 
-  onAuthStateChanged(auth, (currentUser: User | null): void => {
-    if (currentUser) {
-      setUser(currentUser)
+  const hedleCLick = () => {
+    if (user) {
+      writeComment({ userId: user.uid, id: movieId, comment: 'comment', email: user.email })
     }
-  })
+  }
+  const comments = getDbValues({ id: movieId })
+  console.log(comments)
+
   return (
     <Box
       sx={{
-        height: '450px' ,
         width: '100%',
         marginY: '20px',
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
-      <Box sx={{ width: '60%' }}>
+      <Box sx={{ width: '60%', margin: '10px', textAlign: 'center' }}>
         <TextField
           variant='outlined'
-          fullWidth
-          sx={{ backgroundColor: '#3c3d3c', borderRadius: '5px' }}
+          sx={{ width: '90%', backgroundColor: '#3c3d3c', borderRadius: '5px' }}
           type='text'
           inputProps={{ style: { color: 'white' } }}
           placeholder='Write a comment...'
@@ -35,10 +36,27 @@ export const MoviePageComments = () => {
           maxRows={4}
           autoComplete='off'
         />
+        <Button
+          variant='contained'
+          type='submit'
+          style={{ margin: '10px', height: '40px' }}
+          onClick={hedleCLick}
+        >
+          Submit
+        </Button>
       </Box>
-      <Button variant='contained' type='submit' style={{ margin: '10px', height: '40px' }}>
-        Submit
-      </Button>
+
+      <Box sx={{ height: '450px', width: '80%', backgroundColor: '#3c3d3c', borderRadius: '5px' }}>
+        {comments
+          ? comments.map(({ comment, email }: any, key = 0) => {
+            return <Typography key={key}>{email} {comment}</Typography>
+          })
+          : 'no comments'}
+      </Box>
     </Box>
   )
+}
+
+type Props = {
+  movieId: number
 }
