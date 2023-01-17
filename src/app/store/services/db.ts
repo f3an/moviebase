@@ -7,13 +7,13 @@ export const writeUserData = (userId: number) => {
 
   set(reference, { email: `${userId}@gmail.com` })
 }
-export const writeComment = ({id, Comment }: Inputs) => {
+export const writeComment = ({ id, Comment }: Inputs) => {
   const reference = ref(db, `films/${id}/comments/`)
 
   push(reference, { userId: Comment.userId, comment: Comment.comment, email: Comment.email })
 }
 
-export const getDbValues = ({ id }: { id: number }) => {
+export const getComments = ({ id }: { id: number }) => {
   const reference = ref(db, `/films/${id}/comments`)
   let comments: Comment[] = []
 

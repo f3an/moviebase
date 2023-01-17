@@ -1,22 +1,25 @@
 import { Box } from '@mui/system'
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { Button, TextField, Typography } from '@mui/material'
 import { useUserContext } from '../../context/userContext'
-import { getDbValues, writeComment } from '../../store/services/db'
+import { getComments, writeComment } from '../../store/services/db'
 
 export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
   const { user } = useUserContext()
+  const commentRef = useRef<HTMLInputElement>(null)
+  const [comments, setComments] = useState<Comment[]>(getComments({ id: movieId }))
 
   const hedleCLick = () => {
-    if (user) {
+    if (user && commentRef.current && commentRef.current.value !== '') {
+      const comment = { userId: user.uid, comment: commentRef.current.value, email: user.email }
       writeComment({
         id: movieId,
-        Comment: { userId: user.uid, comment: 'comment', email: user.email },
+        Comment: comment,
       })
+      commentRef.current.value = ''
+      setComments(getComments({ id: movieId }))
     }
   }
-  const comments = getDbValues({ id: movieId })
-  console.log(comments)
 
   return (
     <Box
@@ -28,15 +31,16 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
         alignItems: 'center',
       }}
     >
-      <Box sx={{ width: '60%', margin: '10px', textAlign: 'center' }}>
+      <Box sx={{ width: '90%', margin: '10px', display: 'flex', justifyContent: 'center' }}>
         <TextField
           variant='outlined'
-          sx={{ width: '90%', backgroundColor: '#3c3d3c', borderRadius: '5px' }}
+          sx={{ width: '80%', backgroundColor: '#3c3d3c', borderRadius: '5px' }}
           type='text'
           inputProps={{ style: { color: 'white' } }}
+          inputRef={commentRef}
           placeholder='Write a comment...'
           multiline
-          maxRows={4}
+          rows={2}
           autoComplete='off'
         />
         <Button
@@ -49,17 +53,21 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
         </Button>
       </Box>
 
-      <Box sx={{ height: '450px', width: '80%', backgroundColor: '#3c3d3c', borderRadius: '5px' }}>
-        {comments
-          ? comments.map(({ comment, email }: Comment, key = 0) => {
+      {comments.length > 0 ? (
+        <Box
+          sx={{ height: '250px', width: '80%', backgroundColor: '#3c3d3c', borderRadius: '5px' }}
+        >
+          {comments.map(({ comment, email }: Comment, key = 0) => {
             return (
               <Typography key={key}>
                 {email} {comment}
               </Typography>
             )
-          })
-          : 'no comments'}
-      </Box>
+          })}
+        </Box>
+      ) : (
+        <></>
+      )}
     </Box>
   )
 }
