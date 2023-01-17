@@ -65,11 +65,17 @@ export const MoviesByGenrePage: React.FC = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  <Pageling genreId={genreId} totalPages={data.total_pages} />
+                  <Pageling
+                    genreId={genreId}
+                    totalPages={data.total_pages <= 500 ? data.total_pages : 500}
+                  />
                   {data.results.map((movie: movieData, key = 0) => {
                     return <Card type='movie' movieData={movie} key={key} />
                   })}
-                  <Pageling genreId={genreId} totalPages={data.total_pages} />
+                  <Pageling
+                    genreId={genreId}
+                    totalPages={data.total_pages <= 500 ? data.total_pages : 500}
+                  />
                 </Box>
               ) : (
                 ''
