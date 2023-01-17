@@ -9,7 +9,10 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
 
   const hedleCLick = () => {
     if (user) {
-      writeComment({ userId: user.uid, id: movieId, comment: 'comment', email: user.email })
+      writeComment({
+        id: movieId,
+        Comment: { userId: user.uid, comment: 'comment', email: user.email },
+      })
     }
   }
   const comments = getDbValues({ id: movieId })
@@ -48,8 +51,12 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
 
       <Box sx={{ height: '450px', width: '80%', backgroundColor: '#3c3d3c', borderRadius: '5px' }}>
         {comments
-          ? comments.map(({ comment, email }: any, key = 0) => {
-            return <Typography key={key}>{email} {comment}</Typography>
+          ? comments.map(({ comment, email }: Comment, key = 0) => {
+            return (
+              <Typography key={key}>
+                {email} {comment}
+              </Typography>
+            )
           })
           : 'no comments'}
       </Box>
@@ -59,4 +66,10 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
 
 type Props = {
   movieId: number
+}
+
+type Comment = {
+  userId: string
+  comment: string
+  email: string
 }
