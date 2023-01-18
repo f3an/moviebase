@@ -5,7 +5,7 @@ import { LoginForm } from './loginFrom'
 import { styleHeaderCard } from './authorizationCardStyle'
 
 export const AuthorizationCard: React.FC = () => {
-  const [login, setLogin] = useState(false)
+  const [login, setLogin] = useState(true)
 
   return (
     <Box
