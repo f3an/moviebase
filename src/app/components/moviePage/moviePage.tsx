@@ -21,7 +21,9 @@ export const MoviePage: React.FC = () => {
     }
   }, [location, dispatch, movieId])
 
-  const backdrop = data ? `url(${process.env.REACT_APP_TMDB_BACKDROP_IMAGE_URL}${data?.backdrop_path})` : ''
+  const backdrop = data
+    ? `url(${process.env.REACT_APP_TMDB_BACKDROP_IMAGE_URL}${data?.backdrop_path})`
+    : ''
 
   return (
     <>
@@ -47,7 +49,7 @@ export const MoviePage: React.FC = () => {
           >
             <MoviePageDescription movieData={data} />
             <MoviePageTrailers movieId={movieId} />
-            <MoviePageComments movieId={movieId} />
+            <MoviePageComments movieId={data.id} />
           </Box>
         ) : (
           <Backdrop

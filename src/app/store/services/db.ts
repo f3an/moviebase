@@ -1,4 +1,4 @@
-import { getDatabase, onValue, push, ref, set } from 'firebase/database'
+import { getDatabase, push, ref, set } from 'firebase/database'
 
 const db = getDatabase()
 
@@ -13,19 +13,6 @@ export const writeComment = ({ id, Comment }: Inputs) => {
   push(reference, { userId: Comment.userId, comment: Comment.comment, email: Comment.email })
 }
 
-export const getComments = ({ id }: { id: number }) => {
-  const reference = ref(db, `/films/${id}/comments`)
-  let comments: Comment[] = []
-
-  onValue(reference, (snapshot) => {
-    const data: Comment[] = Object.values(snapshot.val())
-    if (data !== null) {
-      comments = data
-    }
-  })
-
-  return comments
-}
 
 type Inputs = {
   id: number
