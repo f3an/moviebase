@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { useGetComments } from '../../hooks/useGetComments'
+import userAvatar from '../../assets/avatarUser.jpg'
 
 export const CommentsList: React.FC = () => {
   const comments = useGetComments()
@@ -24,11 +25,19 @@ export const CommentsList: React.FC = () => {
         },
       }}
     >
-      {comments.map(({ comment, email }: Comment, key = 0) => {
+      Comments: {comments.length}
+      {comments.map(({ comment, email, photoURL }: Comment, key = 0) => {
         return (
-          <Typography key={key}>
-            {email} {comment}
-          </Typography>
+          <Box key={key} sx={{ display: 'flex', alignItems: 'center' }}>
+            <img
+              src={photoURL ? photoURL : userAvatar}
+              alt='user-avatar'
+              style={{ width: '40px', height: '40px', borderRadius: '50%', margin: '10px' }}
+            />
+            <Typography>
+              {email}: {comment}
+            </Typography>
+          </Box>
         )
       })}
     </Box>
@@ -39,4 +48,5 @@ type Comment = {
   userId: string
   comment: string
   email: string
+  photoURL: string
 }

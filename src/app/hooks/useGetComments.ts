@@ -16,7 +16,7 @@ export const useGetComments = () => {
         setComments(data)
       }
     })
-  }, [reference])
+  }, [movieId])
 
   return comments
 }
@@ -25,4 +25,5 @@ type Comment = {
   userId: string
   comment: string
   email: string
+  photoURL: string
 }

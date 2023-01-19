@@ -1,6 +1,6 @@
 import { Box } from '@mui/system'
 import React, { useRef } from 'react'
-import { Button, TextField } from '@mui/material'
+import { Button, TextField, Typography } from '@mui/material'
 import { useUserContext } from '../../context/userContext'
 import { writeComment } from '../../store/services/db'
 import { CommentsList } from './commentsList'
@@ -8,10 +8,15 @@ import { CommentsList } from './commentsList'
 export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
   const { user } = useUserContext()
   const commentRef = useRef<HTMLInputElement>(null)
-  
+
   const hedleCLick = async () => {
     if (user && commentRef.current && commentRef.current.value !== '') {
-      const comment = { userId: user.uid, comment: commentRef.current.value, email: user.email }
+      const comment = {
+        userId: user.uid,
+        comment: commentRef.current.value,
+        email: user.email,
+        photoURL: user.photoURL,
+      }
       writeComment({
         id: movieId,
         Comment: comment,
@@ -30,6 +35,7 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
         alignItems: 'center',
       }}
     >
+      <CommentsList />
       {user ? (
         <>
           <Box sx={{ width: '90%', margin: '10px', display: 'flex', justifyContent: 'center' }}>
@@ -53,10 +59,22 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
               Submit
             </Button>
           </Box>
-          <CommentsList />
         </>
       ) : (
-        <></>
+        <Box
+          sx={{
+            width: '70%',
+            height: '50px',
+            margin: '5px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#3c3d3c',
+            borderRadius: '5px',
+          }}
+        >
+          <Typography variant='body2'>Login to leave comment...</Typography>
+        </Box>
       )}
     </Box>
   )
@@ -65,9 +83,3 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
 type Props = {
   movieId: number
 }
-
-// type Comment = {
-//   userId: string
-//   comment: string
-//   email: string
-// }

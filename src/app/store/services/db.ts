@@ -10,9 +10,13 @@ export const writeUserData = (userId: number) => {
 export const writeComment = ({ id, Comment }: Inputs) => {
   const reference = ref(db, `films/${id}/comments/`)
 
-  push(reference, { userId: Comment.userId, comment: Comment.comment, email: Comment.email })
+  push(reference, {
+    userId: Comment.userId,
+    photoURL: Comment.photoURL,
+    comment: Comment.comment,
+    email: Comment.email,
+  })
 }
-
 
 type Inputs = {
   id: number
@@ -23,4 +27,5 @@ type Comment = {
   userId: string
   comment: string
   email: string
+  photoURL: string
 }
