@@ -9,7 +9,7 @@ Links:
 https://moviebaseua.netlify.app, https://moviebase.com.ua
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ceffa93b-5b35-4649-9021-377d8efe9157/deploy-status)](https://moviebase.com.ua)
-
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/17fdfaf615a74d9e9b82f3a26d89cdbe)](https://moviebase.com.ua)
 ------
 
 ## This is my pet-project based on
