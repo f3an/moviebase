@@ -11,9 +11,11 @@ export const useGetComments = () => {
 
   useEffect(() => {
     onValue(reference, (snapshot) => {
-      const data: Comment[] = Object.values(snapshot.val())
-      if (data !== null) {
+      if (snapshot.val() !== null) {
+        const data: Comment[] = Object.values(snapshot.val())
         setComments(data)
+      } else {
+        setComments([])
       }
     })
   }, [movieId])
