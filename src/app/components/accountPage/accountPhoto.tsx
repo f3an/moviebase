@@ -26,10 +26,9 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
   return (
     <Box
       sx={{
-        width: '100%',
         display: 'flex',
-        justifyContent: 'space-evenly',
         alignItems: 'center',
+        gap: '10px'
       }}
     >
       <img

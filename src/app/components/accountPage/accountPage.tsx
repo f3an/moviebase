@@ -12,29 +12,30 @@ export const AccountPage: React.FC = () => {
   return (
     <Box
       sx={{
-        paddingTop: '100px',
-        paddingBottom: '50px',
         width: '100%',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: 'calc(100% - 120px)',
+        paddingTop: '120px',
         backgroundColor: '#212120',
       }}
     >
       <Container
         sx={{
           padding: '40px',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          height: '95%',
           borderRadius: '5px',
           backgroundColor: 'white',
         }}
       >
         {user !== null ? (
-          <>
+          <Box
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '20px',
+            }}
+          >
             <AccountPhoto user={user} />
             <Box>
               <Typography>user logged in: {user?.email}</Typography>
@@ -48,7 +49,7 @@ export const AccountPage: React.FC = () => {
                 Logout
               </Button>
             </Box>
-          </>
+          </Box>
         ) : (
           <Button variant='outlined' href='account/authorization'>
             Authorization

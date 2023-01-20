@@ -9,6 +9,7 @@ export const Header: React.FC = () => {
     <Box
       sx={{
         padding: '30px',
+        height: '60px',
         width: 'calc(100% - 60px)',
         display: 'flex',
         alignItems: 'center',
