@@ -34,7 +34,7 @@ export const HeaderNavigation: React.FC = () => {
           onClick={toggleShowMovieGenres}
           style={{ cursor: 'pointer' }}
         >
-          Ganres
+          Genres
         </Typography>
         {showMovieGenres ? <HeaderGenresModal toggle={toggleShowMovieGenres} type='movie' /> : ''}
       </Box>

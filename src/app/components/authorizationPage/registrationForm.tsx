@@ -31,9 +31,8 @@ export const RegistrationForm: React.FC = () => {
   const handleSubmit = async (values: FormikValues) => {
     try {
       await signUp(values)
-      // await sendVerficationEmail()
       await logOut()
-      navigate('/')
+      navigate(0)
     } catch (error: unknown) {
       setRegistrationError('Registration Error')
     }

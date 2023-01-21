@@ -28,7 +28,7 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
       sx={{
         display: 'flex',
         alignItems: 'center',
-        gap: '10px'
+        gap: '10px',
       }}
     >
       <img
@@ -37,7 +37,12 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
         style={{ width: '50px', height: '50px', borderRadius: '50%' }}
       />
       <input type='file' name='profile-photo' onChange={hendleChange} />
-      <Button disabled={isLoading || !photo} onClick={hendleClick}>
+      <Button
+        disabled={isLoading || !photo}
+        variant='contained'
+        sx={{ ':disabled': { color: 'grey' } }}
+        onClick={hendleClick}
+      >
         upload
       </Button>
     </Box>

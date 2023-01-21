@@ -31,9 +31,7 @@ export function CircularProgressWithLabel(props: CircularProgressProps & { value
           justifyContent: 'center',
         }}
       >
-        <Typography component='div' color={props.value > 50 ? 'success' : 'error'}>{`${Math.round(
-          props.value,
-        )}%`}</Typography>
+        <Typography component='div'>{`${Math.round(props.value) / 10}`}</Typography>
       </Box>
     </Box>
   )
