@@ -1,9 +1,10 @@
 import React from 'react'
 import { Box } from '@mui/system'
-import { Button, Container, Typography } from '@mui/material'
+import { Button, Container, TextField, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { AccountPhoto } from './accountPhoto'
 import { useUserContext } from '../../context/userContext'
+import { DeleteAccountModal } from './deleteAccountModal'
 
 export const AccountPage: React.FC = () => {
   const navigate = useNavigate()
@@ -23,10 +24,11 @@ export const AccountPage: React.FC = () => {
           padding: '40px',
           height: '95%',
           borderRadius: '5px',
-          backgroundColor: 'white',
+          color: 'white',
+          backgroundColor: '#30302f',
         }}
       >
-        {user !== null ? (
+        {user ? (
           <Box
             sx={{
               width: '100%',
@@ -37,8 +39,8 @@ export const AccountPage: React.FC = () => {
             }}
           >
             <AccountPhoto user={user} />
-            <Box>
-              <Typography>user logged in: {user?.email}</Typography>
+            <TextField placeholder={user.email} disabled={true}></TextField>
+            <Box sx={{ display: 'flex', gap: '20px' }}>
               <Button
                 variant='contained'
                 onClick={async () => {
@@ -48,10 +50,11 @@ export const AccountPage: React.FC = () => {
               >
                 Logout
               </Button>
+              <DeleteAccountModal />
             </Box>
           </Box>
         ) : (
-          <Button variant='outlined' href='account/authorization'>
+          <Button variant='outlined' href='/authorization'>
             Authorization
           </Button>
         )}
