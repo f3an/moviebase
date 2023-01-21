@@ -2,8 +2,8 @@ import React from 'react'
 import { Box } from '@mui/material'
 import { useGetVideosByMovieIdQuery } from '../../store/services/tmdbApi'
 
-export const MoviePageTrailers: React.FC<{ movieId: number }> = (props) => {
-  const { data } = useGetVideosByMovieIdQuery(props.movieId)
+export const MoviePageTrailers: React.FC<{ movieId: number }> = ({ movieId }) => {
+  const { data } = useGetVideosByMovieIdQuery(movieId)
 
   const getTrailerLink = () => {
     const trailers: string[] = []
@@ -18,7 +18,7 @@ export const MoviePageTrailers: React.FC<{ movieId: number }> = (props) => {
   }
   return (
     <>
-      {data?.results.length === 0 ? (
+      {data && data.results.length === 0 ? (
         <></>
       ) : (
         <Box sx={{ width: '100%', marginY: '50px', display: 'flex', justifyContent: 'center' }}>
@@ -26,7 +26,7 @@ export const MoviePageTrailers: React.FC<{ movieId: number }> = (props) => {
             sx={{
               height: '600px',
               width: '1010px',
-              overflowY: 'auto',
+              overflowY: `${getTrailerLink().length > 1 ? 'auto' : 'none'}`,
               '&::-webkit-scrollbar': {
                 width: '8px',
                 '--webkit-appearance': 'none',
@@ -46,7 +46,6 @@ export const MoviePageTrailers: React.FC<{ movieId: number }> = (props) => {
                   src={element}
                   frameBorder='0'
                   title='Embedded youtube'
-                  // eslint-disable-next-line react/no-unknown-property
                   allowFullScreen
                   key={element}
                   style={{ marginBottom: '20px' }}

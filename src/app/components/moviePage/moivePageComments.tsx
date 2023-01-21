@@ -4,6 +4,7 @@ import { Button, TextField, Typography } from '@mui/material'
 import { useUserContext } from '../../context/userContext'
 import { writeComment } from '../../store/services/db'
 import { CommentsList } from './commentsList'
+import { Link } from 'react-router-dom'
 
 export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
   const { user } = useUserContext()
@@ -36,7 +37,7 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
       }}
     >
       <CommentsList />
-      {user ? (
+      {user && user.emailVerified ? (
         <>
           <Box sx={{ width: '90%', margin: '10px', display: 'flex', justifyContent: 'center' }}>
             <TextField
@@ -73,7 +74,9 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
             borderRadius: '5px',
           }}
         >
-          <Typography variant='body2'>Login to leave comment...</Typography>
+          <Link to='/authorization' style={{ textDecoration: 'none', color: 'white' }}>
+            <Typography variant='body2'>Login to leave comment...</Typography>
+          </Link>
         </Box>
       )}
     </Box>

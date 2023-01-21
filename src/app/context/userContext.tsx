@@ -46,6 +46,12 @@ export const UserContextProvider = ({ children }: any) => {
     return signInWithPopup(auth, provider)
   }
 
+  const deleteUser = () =>{
+    if (user) {
+      user.delete()
+    }
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: User | null): void => {
       if (currentUser) {
@@ -60,7 +66,7 @@ export const UserContextProvider = ({ children }: any) => {
   }, [])
 
   return (
-    <userContext.Provider value={{ user, signIn, signUp, signInWithGoogle, logOut }}>
+    <userContext.Provider value={{ user, signIn, signUp, signInWithGoogle, logOut, deleteUser }}>
       {children}
     </userContext.Provider>
   )
