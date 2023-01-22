@@ -4,7 +4,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import CloseIcon from '@mui/icons-material/Close'
 import userAvatar from '../../assets/avatarUser.jpg'
 import { useUserContext } from '../../context/userContext'
-import { UserMenuModal } from './userManuModal'
+import { UserMenuDropdown } from './userManuModal'
 
 export const UserMenu: React.FC = () => {
   const { user } = useUserContext()
@@ -36,7 +36,7 @@ export const UserMenu: React.FC = () => {
         />
         {isShownUserMenu ? <CloseIcon /> : <ArrowDropDownIcon />}
       </Box>
-      {isShownUserMenu ? <UserMenuModal toggle={toggle} /> : <></>}
+      {isShownUserMenu ? <UserMenuDropdown toggle={toggle} /> : <></>}
     </Box>
   )
 }

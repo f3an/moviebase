@@ -1,10 +1,11 @@
 import React from 'react'
 import { Box } from '@mui/system'
-import { Button, Container, TextField, Typography } from '@mui/material'
+import { Button, Container } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { AccountPhoto } from './accountPhoto'
 import { useUserContext } from '../../context/userContext'
 import { DeleteAccountModal } from './deleteAccountModal'
+import { AccountEmail } from './accountEmail'
 
 export const AccountPage: React.FC = () => {
   const navigate = useNavigate()
@@ -39,7 +40,7 @@ export const AccountPage: React.FC = () => {
             }}
           >
             <AccountPhoto user={user} />
-            <TextField placeholder={user.email} disabled={true}></TextField>
+            <AccountEmail />
             <Box sx={{ display: 'flex', gap: '20px' }}>
               <Button
                 variant='contained'

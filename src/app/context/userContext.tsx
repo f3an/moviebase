@@ -8,6 +8,7 @@ import {
   User,
   signOut,
   sendEmailVerification,
+  updateEmail,
 } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
 
@@ -46,9 +47,15 @@ export const UserContextProvider = ({ children }: any) => {
     return signInWithPopup(auth, provider)
   }
 
-  const deleteUser = () =>{
+  const deleteUser = () => {
     if (user) {
       user.delete()
+    }
+  }
+
+  const changeEmail = async (newEmail: string) => {
+    if (user) {
+      return updateEmail(user, newEmail)
     }
   }
 
@@ -66,7 +73,9 @@ export const UserContextProvider = ({ children }: any) => {
   }, [])
 
   return (
-    <userContext.Provider value={{ user, signIn, signUp, signInWithGoogle, logOut, deleteUser }}>
+    <userContext.Provider
+      value={{ user, signIn, signUp, signInWithGoogle, logOut, deleteUser, changeEmail }}
+    >
       {children}
     </userContext.Provider>
   )

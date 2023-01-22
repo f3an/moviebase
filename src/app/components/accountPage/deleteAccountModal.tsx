@@ -1,10 +1,10 @@
-import { Box, Button, TextField, Typography, IconButton } from '@mui/material'
 import React, { useState } from 'react'
+import { Box, Button, TextField, Typography, IconButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useUserContext } from '../../context/userContext'
 import CloseIcon from '@mui/icons-material/Close'
 
-export const DeleteAccountModal = () => {
+export const DeleteAccountModal: React.FC = () => {
   const navigate = useNavigate()
   const { user, deleteUser } = useUserContext()
   const [showModal, setShowModal] = useState(false)

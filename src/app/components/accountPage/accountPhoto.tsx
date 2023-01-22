@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { upload } from '../../../firebaseConfig'
 import userAvatar from '../../assets/avatarUser.jpg'
 import { useNavigate } from 'react-router-dom'
@@ -27,16 +27,25 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
     <Box
       sx={{
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: 'column',
         gap: '10px',
       }}
     >
-      <img
-        src={user ? (user.photoURL == null ? userAvatar : user.photoURL) : userAvatar}
-        alt='user-avatar'
-        style={{ width: '50px', height: '50px', borderRadius: '50%' }}
-      />
-      <input type='file' name='profile-photo' onChange={hendleChange} />
+      <Typography>Photo: </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+        }}
+      >
+        <img
+          src={user ? (user.photoURL == null ? userAvatar : user.photoURL) : userAvatar}
+          alt='user-avatar'
+          style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+        />
+        <input type='file' name='profile-photo' onChange={hendleChange} />
+      </Box>
       <Button
         disabled={isLoading || !photo}
         variant='contained'
