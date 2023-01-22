@@ -9,8 +9,10 @@ import {
   signOut,
   sendEmailVerification,
   updateEmail,
+  updateProfile,
 } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const userContext = createContext<any>({})
@@ -23,6 +25,8 @@ type UserCredential = {
 export const useUserContext = () => {
   return useContext(userContext)
 }
+
+const storage = getStorage()
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const UserContextProvider = ({ children }: any) => {
@@ -59,6 +63,21 @@ export const UserContextProvider = ({ children }: any) => {
     }
   }
 
+  const uploadUserPhoto = async (
+    file: File | undefined,
+    currentUser: User | undefined,
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  ) => {
+    setIsLoading(true)
+    if (currentUser && file) {
+      const fileRef = ref(storage, `files/${currentUser.uid}/${file.name}`)
+      await uploadBytes(fileRef, file)
+      const photoUrl = await getDownloadURL(fileRef)
+      await updateProfile(currentUser, { photoURL: photoUrl })
+    }
+    setIsLoading(false)
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: User | null): void => {
       if (currentUser) {
@@ -74,7 +93,7 @@ export const UserContextProvider = ({ children }: any) => {
 
   return (
     <userContext.Provider
-      value={{ user, signIn, signUp, signInWithGoogle, logOut, deleteUser, changeEmail }}
+      value={{ user, signIn, signUp, signInWithGoogle, logOut, deleteUser, changeEmail, uploadUserPhoto }}
     >
       {children}
     </userContext.Provider>
