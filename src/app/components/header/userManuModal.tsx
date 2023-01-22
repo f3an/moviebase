@@ -3,7 +3,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useUserContext } from '../../context/userContext'
 
-export const UserMenuModal: React.FC<{ toggle: () => void }> = ({ toggle }) => {
+export const UserMenuDropdown: React.FC<{ toggle: () => void }> = ({ toggle }) => {
   const { user, logOut } = useUserContext()
   const navigate = useNavigate()
 
