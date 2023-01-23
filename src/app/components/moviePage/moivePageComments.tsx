@@ -37,29 +37,61 @@ export const MoviePageComments: React.FC<Props> = ({ movieId }) => {
       }}
     >
       <CommentsList />
-      {user && user.emailVerified ? (
+      {user ? (
         <>
-          <Box sx={{ width: '90%', margin: '10px', display: 'flex', justifyContent: 'center' }}>
-            <TextField
-              variant='outlined'
-              sx={{ width: '80%', backgroundColor: '#3c3d3c', borderRadius: '5px' }}
-              type='text'
-              inputProps={{ style: { color: 'white' } }}
-              inputRef={commentRef}
-              placeholder='Write a comment...'
-              multiline
-              rows={2}
-              autoComplete='off'
-            />
-            <Button
-              variant='contained'
-              type='submit'
-              style={{ margin: '10px', height: '40px' }}
-              onClick={hedleCLick}
+          {user.emailVerified ? (
+            <Box
+              sx={{
+                width: 'calc(70% + 40px)',
+                margin: '10px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'relative',
+              }}
             >
-              Submit
-            </Button>
-          </Box>
+              <TextField
+                variant='outlined'
+                sx={{ width: '100%', backgroundColor: '#3c3d3c', borderRadius: '5px' }}
+                type='text'
+                inputProps={{ style: { color: 'white', paddingRight: '100px' } }}
+                inputRef={commentRef}
+                placeholder='Write a comment...'
+                multiline
+                rows={2}
+                autoComplete='off'
+              />
+              <Button
+                variant='contained'
+                type='submit'
+                style={{
+                  height: '40px',
+                  position: 'absolute',
+                  right: '10px',
+                }}
+                onClick={hedleCLick}
+              >
+                Submit
+              </Button>
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                width: '70%',
+                height: '50px',
+                margin: '5px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#3c3d3c',
+                borderRadius: '5px',
+              }}
+            >
+              <Link to='/authorization' style={{ textDecoration: 'none', color: 'white' }}>
+                <Typography variant='body2'>Verify your email to leave comment...</Typography>
+              </Link>
+            </Box>
+          )}
         </>
       ) : (
         <Box
