@@ -8,7 +8,7 @@ export const useBackdrop = (movieList: movieData[] | undefined) => {
       const random = Math.floor(Math.random() * movieList.length)
       if (movieList[random]?.backdrop_path) {
         setBackdrop(
-          `url(${process.env.REACT_APP_TMDB_BACKDROP_IMAGE_URL ?? ''}${
+          `url(${process.env.REACT_APP_TMDB_BACKDROP_IMAGE_URL ?? 'REACT_APP_TMDB_BACKDROP_IMAGE_URL'}${
             movieList[random]?.backdrop_path
           })`,
         )

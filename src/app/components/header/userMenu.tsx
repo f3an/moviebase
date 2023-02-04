@@ -26,13 +26,19 @@ export const UserMenu: React.FC = () => {
       onClick={toggle}
     >
       <Box
-        sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+        sx={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          gap: '5px',
+        }}
       >
         {user.displayName ? <Typography> {user.displayName} </Typography> : <></>}
         <img
           src={user ? (user.photoURL == null ? userAvatar : user.photoURL) : userAvatar}
           alt='user-avatar'
-          style={{ width: '35px', height: '35px', borderRadius: '50%', marginRight: '5px' }}
+          style={{ width: '35px', height: '35px', borderRadius: '50%' }}
         />
         {isShownUserMenu ? <CloseIcon /> : <ArrowDropDownIcon />}
       </Box>

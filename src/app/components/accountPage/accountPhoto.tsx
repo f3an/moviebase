@@ -27,12 +27,13 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
   return (
     <Box
       sx={{
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
       }}
     >
-      <Typography>Photo: </Typography>
+      <Typography variant='h5'>Photo: </Typography>
       <Box
         sx={{
           display: 'flex',

@@ -45,6 +45,7 @@ export const MainPage: React.FC = () => {
             sx={{
               display: 'flex',
               margin: '50px',
+              marginTop: '150px',
               height: '60%',
               width: '100%',
               alignItems: 'center',

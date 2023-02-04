@@ -1,4 +1,4 @@
-import { Box, IconButton, TextField } from '@mui/material'
+import { Box, IconButton, TextField, Typography } from '@mui/material'
 import React, { useRef, useState } from 'react'
 import EditIcon from '@mui/icons-material/Edit'
 import { useUserContext } from '../../context/userContext'
@@ -13,20 +13,26 @@ export const AccountEmail: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>()
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <TextField
-        placeholder={user.email}
-        disabled={ableToEdit}
-        inputProps={{ style: { color: 'white' } }}
-        inputRef={inputRef}
-        type='email'
-      />
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', height: '50px' }}>
+      <Typography variant='h5'>Email:</Typography>
+
       {ableToEdit ? (
-        <IconButton onClick={() => setAbleToEdit(false)}>
-          <EditIcon />
-        </IconButton>
+        <>
+          <Typography>{user.email}</Typography>
+          <IconButton onClick={() => setAbleToEdit(false)}>
+            <EditIcon />
+          </IconButton>
+        </>
       ) : (
         <>
+          <TextField
+            fullWidth
+            placeholder={user.email}
+            disabled={ableToEdit}
+            inputProps={{ style: { color: 'black' } }}
+            inputRef={inputRef}
+            type='email'
+          />
           <IconButton
             onClick={async () => {
               setAbleToEdit(true)

@@ -19,6 +19,7 @@ export const FormikField: React.FC<FormikFieldProps> = ({ name, label, type }) =
         name={name}
         label={label}
         type={type}
+        inputProps={{ style: { color: 'white' } }}
         helperText={<ErrorMessage name={name} />}
       />
     </Box>
