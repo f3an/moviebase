@@ -63,17 +63,23 @@ export const UserContextProvider = ({ children }: any) => {
     }
   }
 
+  const changeUsername = async (username: string) => {
+    if (user) {
+      return updateProfile(user, { displayName: username })
+    }
+  }
+
   const uploadUserPhoto = async (
     file: File | undefined,
     currentUser: User | undefined,
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   ) => {
     setIsLoading(true)
-    if (currentUser && file) {
-      const fileRef = ref(storage, `files/${currentUser.uid}/${file.name}`)
+    if (user && file) {
+      const fileRef = ref(storage, `files/${user.uid}/${file.name}`)
       await uploadBytes(fileRef, file)
       const photoUrl = await getDownloadURL(fileRef)
-      await updateProfile(currentUser, { photoURL: photoUrl })
+      await updateProfile(user, { photoURL: photoUrl })
     }
     setIsLoading(false)
   }
@@ -93,7 +99,17 @@ export const UserContextProvider = ({ children }: any) => {
 
   return (
     <userContext.Provider
-      value={{ user, signIn, signUp, signInWithGoogle, logOut, deleteUser, changeEmail, uploadUserPhoto }}
+      value={{
+        user,
+        signIn,
+        signUp,
+        signInWithGoogle,
+        logOut,
+        deleteUser,
+        changeEmail,
+        uploadUserPhoto,
+        changeUsername,
+      }}
     >
       {children}
     </userContext.Provider>
