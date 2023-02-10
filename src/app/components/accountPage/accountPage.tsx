@@ -52,7 +52,7 @@ export const AccountPage: React.FC = () => {
             >
               <Box
                 sx={{
-                  marginTop: '70px',
+                  marginTop: '60px',
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
