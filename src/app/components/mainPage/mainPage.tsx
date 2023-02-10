@@ -55,7 +55,7 @@ export const MainPage: React.FC = () => {
             <MainSlider
               movies={data.results}
               focusedMovie={focusedMovie}
-              clickEvent={heandlerClick}
+              setFocusedMovie={heandlerClick}
             />
           </Box>
         ) : (

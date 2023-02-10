@@ -4,34 +4,41 @@ import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import styled from 'styled-components'
 import { useShownMovies } from '../../hooks/useShownMovies'
 
-export const MainSlider: React.FC<Props> = ({ movies, focusedMovie, clickEvent }) => {
+export const MainSlider: React.FC<Props> = ({ movies, focusedMovie, setFocusedMovie }) => {
   const focusedMovieIndex = movies.findIndex((movie) => movie === focusedMovie)
   const imageApiUrl = process.env.REACT_APP_TMDB_IMAGE_URL ?? ''
 
   const shownMovies = useShownMovies({ focusedMovieIndex, movies })
-  
+
   useEffect(() => {
     const autoPlay = setTimeout(() => {
-      focusedMovieIndex < 19 ? clickEvent(movies[focusedMovieIndex + 1]) : clickEvent(movies[0])
+      focusedMovieIndex < 19
+        ? setFocusedMovie(movies[focusedMovieIndex + 1])
+        : setFocusedMovie(movies[0])
     }, 5000)
 
     const stopAutoPlay = () => {
       clearTimeout(autoPlay)
     }
 
-    return () => stopAutoPlay()
-  }, [clickEvent, focusedMovieIndex, movies])
+    return stopAutoPlay()
+  }, [setFocusedMovie, focusedMovieIndex, movies])
+
+  const hendleBackButtonPress = () => {
+    focusedMovieIndex > 0
+      ? setFocusedMovie(movies[focusedMovieIndex - 1])
+      : setFocusedMovie(movies[movies.length - 1])
+  }
+
+  const hendleForwardButtonPress = () => {
+    focusedMovieIndex < movies.length - 1
+      ? setFocusedMovie(movies[focusedMovieIndex + 1])
+      : setFocusedMovie(movies[0])
+  }
 
   return (
     <StyledSlider>
-      <IconButton
-        sx={{ color: 'white' }}
-        onClick={() => {
-          focusedMovieIndex > 0
-            ? clickEvent(movies[focusedMovieIndex - 1])
-            : clickEvent(movies[movies.length - 1])
-        }}
-      >
+      <IconButton sx={{ color: 'white' }} onClick={hendleBackButtonPress}>
         <ArrowBack />
       </IconButton>
       {shownMovies.map((movie, key = 0) => {
@@ -49,20 +56,13 @@ export const MainSlider: React.FC<Props> = ({ movies, focusedMovie, clickEvent }
           <StyledCard
             src={imageApiUrl + movie.poster_path}
             onClick={() => {
-              clickEvent(movie)
+              setFocusedMovie(movie)
             }}
             key={key}
           />
         )
       })}
-      <IconButton
-        sx={{ color: 'white' }}
-        onClick={() => {
-          focusedMovieIndex < movies.length - 1
-            ? clickEvent(movies[focusedMovieIndex + 1])
-            : clickEvent(movies[0])
-        }}
-      >
+      <IconButton sx={{ color: 'white' }} onClick={hendleForwardButtonPress}>
         <ArrowForward />
       </IconButton>
     </StyledSlider>
@@ -90,7 +90,7 @@ type movieData = {
 type Props = {
   movies: movieData[]
   focusedMovie: movieData
-  clickEvent: (movieData: movieData) => void
+  setFocusedMovie: (movieData: movieData) => void
 }
 
 const card = styled.img
