@@ -32,6 +32,7 @@ export const UserMenu: React.FC = () => {
           justifyContent: 'flex-end',
           alignItems: 'center',
           gap: '5px',
+          cursor: 'pointer',
         }}
       >
         {user.displayName ? <Typography> {user.displayName} </Typography> : <></>}

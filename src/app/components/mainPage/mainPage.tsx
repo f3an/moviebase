@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Backdrop, Box, CircularProgress } from '@mui/material'
 import { useGetTrandingMoviesQuery } from '../../store/services/tmdbApi'
-import { MainCarousel } from './mainCarousel'
+import { MainSlider } from './mainSlider'
 import { MainMovie } from './mainMovie'
 
 export const MainPage: React.FC = () => {
@@ -15,7 +15,7 @@ export const MainPage: React.FC = () => {
     }
   }, [data, isLoading])
 
-  const heandlerCardClick = (movieData: movieData) => {
+  const heandlerClick = (movieData: movieData) => {
     setFocusedMovie(movieData)
   }
 
@@ -44,18 +44,18 @@ export const MainPage: React.FC = () => {
           <Box
             sx={{
               display: 'flex',
+              flexDirection: 'column',
               margin: '50px',
               marginTop: '150px',
-              height: '60%',
               width: '100%',
-              alignItems: 'center',
+              gap: '100px',
             }}
           >
             <MainMovie movieData={focusedMovie} />
-            <MainCarousel
+            <MainSlider
               movies={data.results}
               focusedMovie={focusedMovie}
-              clickCardEvent={heandlerCardClick}
+              clickEvent={heandlerClick}
             />
           </Box>
         ) : (
