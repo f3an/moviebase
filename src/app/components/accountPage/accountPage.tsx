@@ -1,12 +1,13 @@
 import React from 'react'
 import { Box } from '@mui/system'
-import { Button, Container } from '@mui/material'
+import { Button, Container, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { AccountPhoto } from './accountPhoto'
 import { useUserContext } from '../../context/userContext'
 import { DeleteAccountModal } from './deleteAccountModal'
 import { AccountEmail } from './accountEmail'
 import { AccountDisplayName } from './accountDisplayName'
+import { AccountPassword } from './accountPassword'
 
 export const AccountPage: React.FC = () => {
   const navigate = useNavigate()
@@ -17,6 +18,7 @@ export const AccountPage: React.FC = () => {
       sx={{
         width: '100%',
         height: 'calc(100% - 120px)',
+        minHeight: '500px',
         paddingTop: '120px',
         backgroundColor: '#212120',
       }}
@@ -43,17 +45,31 @@ export const AccountPage: React.FC = () => {
           >
             <Box
               sx={{
-                width: '50%',
                 height: '100%',
                 display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'start',
-                gap: '20px',
+                gap: '50px',
               }}
             >
-              <AccountPhoto user={user} />
-              <AccountEmail />
-              <AccountDisplayName />
+              <Box
+                sx={{
+                  marginTop: '70px',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '35px',
+                }}
+              >
+                <Typography variant='h5'>Photo: </Typography>
+                <Typography variant='h5'>Email:</Typography>
+                <Typography variant='h5'>Username: </Typography>
+                <Typography variant='h5'>Password:</Typography>
+              </Box>
+              <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <AccountPhoto user={user} />
+                <AccountEmail />
+                <AccountDisplayName />
+                <AccountPassword />
+              </Box>
             </Box>
 
             <Box sx={{ display: 'flex', gap: '20px' }}>

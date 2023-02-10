@@ -13,9 +13,9 @@ export const AccountEmail: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>()
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', height: '50px' }}>
-      <Typography variant='h5'>Email:</Typography>
-
+    <Box
+      sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '350px', height: '50px' }}
+    >
       {ableToEdit ? (
         <>
           <Typography>{user.email}</Typography>
