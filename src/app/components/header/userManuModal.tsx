@@ -20,6 +20,7 @@ export const UserMenuDropdown: React.FC<{ toggle: () => void }> = ({ toggle }) =
         zIndex: '3',
         borderRadius: '5px',
       }}
+      onClick={(e) => e.stopPropagation()}
       onMouseLeave={toggle}
     >
       <Box

@@ -6,19 +6,29 @@ import SaveIcon from '@mui/icons-material/Save'
 import CloseIcon from '@mui/icons-material/Close'
 import { useNavigate } from 'react-router-dom'
 
-export const AccountEmail: React.FC = () => {
+export const AccountDisplayName: React.FC = () => {
   const navigate = useNavigate()
-  const { user, changeEmail } = useUserContext()
+  const { user, changeUsername } = useUserContext()
   const [ableToEdit, setAbleToEdit] = useState(true)
   const inputRef = useRef<HTMLInputElement>()
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', height: '50px' }}>
-      <Typography variant='h5'>Email:</Typography>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%' }}>
+      <Typography variant='h5'>Username: </Typography>
 
       {ableToEdit ? (
         <>
-          <Typography>{user.email}</Typography>
+          {user.displayName ? (
+            <Typography>{user.displayName}</Typography>
+          ) : (
+            <TextField
+              fullWidth
+              placeholder='enter username'
+              disabled={ableToEdit}
+              inputProps={{ style: { color: 'black' } }}
+              inputRef={inputRef}
+            />
+          )}
           <IconButton onClick={() => setAbleToEdit(false)}>
             <EditIcon />
           </IconButton>
@@ -27,17 +37,16 @@ export const AccountEmail: React.FC = () => {
         <>
           <TextField
             fullWidth
-            placeholder={user.email}
+            placeholder={user.displayName}
             disabled={ableToEdit}
             inputProps={{ style: { color: 'black' } }}
             inputRef={inputRef}
-            type='email'
           />
           <IconButton
             onClick={async () => {
               setAbleToEdit(true)
               if (inputRef.current && inputRef.current.value !== '') {
-                await changeEmail(inputRef.current.value)
+                await changeUsername(inputRef.current.value)
                 navigate(0)
               }
             }}

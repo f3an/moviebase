@@ -73,7 +73,7 @@ export const LoginForm: React.FC = () => {
           <FormikField name='email' label='Email' type='email' />
           <FormikField name='password' label='Password' type='password' />
           {forgot ? (
-            <Link to='/authorization/forgot' style={{ textDecoration: 'none', color: 'blue' }}>
+            <Link to='/authorization/forgot' style={{ textDecoration: 'none', color: 'white' }}>
               <Typography>Forgot Password ?</Typography>
             </Link>
           ) : (

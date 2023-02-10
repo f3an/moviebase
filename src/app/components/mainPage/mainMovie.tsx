@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 export const MainMovie: React.FC<{ movieData: movieData }> = ({ movieData }) => {
   return (
-    <Box sx={{ height: '450px', width: '60%', display: 'flex', alignItems: 'center' }}>
+    <Box sx={{ height: '450px', width: '70%', display: 'flex', alignItems: 'center' }}>
       <Box sx={{ position: 'relative', display: 'flex', m: 2 }}>
         <Link to={`/movie/${movieData.id}`} style={{ textDecoration: 'none', color: '#fff' }}>
           <img
@@ -44,7 +44,7 @@ export const MainMovie: React.FC<{ movieData: movieData }> = ({ movieData }) => 
         </Box>
 
         <Box className='movie-block-overview' sx={{ mt: '80px' }}>
-          {movieData.overview}
+          <Typography variant='body1'>{movieData.overview}</Typography>
         </Box>
       </Box>
     </Box>

@@ -15,7 +15,7 @@ export const DeleteAccountModal: React.FC = () => {
       <Button
         variant='outlined'
         color='error'
-        sx={{ color: 'white' }}
+        sx={{ color: 'grey', '&:hover': { color: 'black' } }}
         onClick={() => setShowModal(true)}
       >
         Delete Account
@@ -102,6 +102,7 @@ const modalMenuStyle = {
   height: '300px',
   width: '500px',
   backgroundColor: '#30302f',
+  color: 'white',
   borderRadius: '10px',
   display: 'flex',
   flexDirection: 'column',

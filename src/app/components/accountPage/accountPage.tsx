@@ -6,6 +6,7 @@ import { AccountPhoto } from './accountPhoto'
 import { useUserContext } from '../../context/userContext'
 import { DeleteAccountModal } from './deleteAccountModal'
 import { AccountEmail } from './accountEmail'
+import { AccountDisplayName } from './accountDisplayName'
 
 export const AccountPage: React.FC = () => {
   const navigate = useNavigate()
@@ -25,22 +26,36 @@ export const AccountPage: React.FC = () => {
           padding: '40px',
           height: '95%',
           borderRadius: '5px',
-          color: 'white',
-          backgroundColor: '#30302f',
+          color: '#30302f',
+          backgroundColor: 'white',
         }}
       >
         {user ? (
           <Box
             sx={{
               width: '100%',
+              height: '100%',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               gap: '20px',
             }}
           >
-            <AccountPhoto user={user} />
-            <AccountEmail />
+            <Box
+              sx={{
+                width: '50%',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'start',
+                gap: '20px',
+              }}
+            >
+              <AccountPhoto user={user} />
+              <AccountEmail />
+              <AccountDisplayName />
+            </Box>
+
             <Box sx={{ display: 'flex', gap: '20px' }}>
               <Button
                 variant='contained'
