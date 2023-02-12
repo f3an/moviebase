@@ -12,7 +12,8 @@ export const AccountPassword: React.FC = () => {
   const navigate = useNavigate()
   const { user, changePassword } = useUserContext()
   const [ableToEdit, setAbleToEdit] = useState(true)
-  const inputRef = useRef<HTMLInputElement>()
+  const newPasswordRef = useRef<HTMLInputElement>()
+  const oldPasswordRef = useRef<HTMLInputElement>()
 
   const toggle = () => {
     if (!ableToEdit) {
@@ -52,15 +53,36 @@ export const AccountPassword: React.FC = () => {
                 </InputAdornment>
               ),
             }}
-            inputRef={inputRef}
+            inputRef={oldPasswordRef}
+          />
+          <TextField
+            fullWidth
+            disabled={ableToEdit}
+            value={user.passwordHash}
+            variant='outlined'
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end' onClick={toggle}>
+                  <IconButton disabled={ableToEdit}>
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            inputRef={newPasswordRef}
           />
           <IconButton
             onClick={async () => {
               setAbleToEdit(true)
 
-              if (inputRef.current && inputRef.current.value !== '') {
-                // changePassword(inputRef.current.value)
-                changePassword(inputRef.current.value)
+              if (
+                newPasswordRef.current &&
+                newPasswordRef.current.value !== '' &&
+                oldPasswordRef.current &&
+                oldPasswordRef.current.value !== ''
+              ) {
+                changePassword(oldPasswordRef.current.value, newPasswordRef.current.value)
                 // navigate(0)
               }
             }}
@@ -70,8 +92,8 @@ export const AccountPassword: React.FC = () => {
           <IconButton
             onClick={() => {
               setAbleToEdit(true)
-              if (inputRef.current) {
-                inputRef.current.value = ''
+              if (newPasswordRef.current) {
+                newPasswordRef.current.value = ''
               }
               setShowPassword(false)
             }}

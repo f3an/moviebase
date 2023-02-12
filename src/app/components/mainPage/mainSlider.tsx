@@ -17,7 +17,7 @@ export const MainSlider: React.FC<Props> = ({ movies, focusedMovie, setFocusedMo
         : setFocusedMovie(movies[0])
     }
 
-    const autoPlay = setTimeout(play, 5000)
+    const autoPlay = setTimeout(play, 8000)
 
     const stopAutoPlay = () => {
       if (isAutoPlayStoped) {

@@ -11,6 +11,8 @@ import {
   updateEmail,
   updateProfile,
   updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
@@ -70,8 +72,10 @@ export const UserContextProvider = ({ children }: any) => {
     }
   }
 
-  const changePassword = (newPassword: string) => {
-    if (user) {
+  const changePassword = (oldPassword: string, newPassword: string) => {
+    if (user && user.email) {
+      const credentials = EmailAuthProvider.credential(user.email, oldPassword)
+      reauthenticateWithCredential(user, credentials)
       return updatePassword(user, newPassword)
     }
   }
@@ -123,7 +127,7 @@ export const UserContextProvider = ({ children }: any) => {
         uploadUserPhoto,
         changeUsername,
         sendVerify,
-        changePassword
+        changePassword,
       }}
     >
       {children}
