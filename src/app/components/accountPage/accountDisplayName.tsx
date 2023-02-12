@@ -14,7 +14,7 @@ export const AccountDisplayName: React.FC = () => {
 
   return (
     <Box
-      sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '350px', height: '50px' }}
+      sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '500px', height: '50px' }}
     >
       {ableToEdit ? (
         <>

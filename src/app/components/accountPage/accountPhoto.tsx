@@ -27,7 +27,7 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
   return (
     <Box
       sx={{
-        width: '350px',
+        width: '500px',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
@@ -50,7 +50,7 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
       <Button
         disabled={isLoading || !photo}
         variant='contained'
-        sx={{ ':disabled': { color: 'grey' } }}
+        sx={{ ':disabled': { color: 'grey' }, width: '250px' }}
         onClick={hendleClick}
       >
         upload
