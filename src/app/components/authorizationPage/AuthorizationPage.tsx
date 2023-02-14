@@ -8,7 +8,8 @@ export const AuthorizationPage: React.FC = () => {
     <Box
       sx={{
         width: '100%',
-        height: '100%',
+        minHeight: 'calc(100% - 120px)',
+        paddingTop: '120px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

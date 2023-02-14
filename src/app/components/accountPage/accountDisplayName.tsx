@@ -13,9 +13,9 @@ export const AccountDisplayName: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>()
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%' }}>
-      <Typography variant='h5'>Username: </Typography>
-
+    <Box
+      sx={{ display: 'flex', alignItems: 'center', gap: '10px', width: '500px', height: '50px' }}
+    >
       {ableToEdit ? (
         <>
           {user.displayName ? (

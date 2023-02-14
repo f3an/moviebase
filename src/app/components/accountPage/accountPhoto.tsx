@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import userAvatar from '../../assets/avatarUser.jpg'
 import { useNavigate } from 'react-router-dom'
 import { User } from 'firebase/auth'
@@ -27,13 +27,12 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
   return (
     <Box
       sx={{
-        width: '100%',
+        width: '500px',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
       }}
     >
-      <Typography variant='h5'>Photo: </Typography>
       <Box
         sx={{
           display: 'flex',
@@ -51,7 +50,7 @@ export const AccountPhoto: React.FC<{ user: User | undefined }> = ({ user }) => 
       <Button
         disabled={isLoading || !photo}
         variant='contained'
-        sx={{ ':disabled': { color: 'grey' } }}
+        sx={{ ':disabled': { color: 'grey' }, width: '250px' }}
         onClick={hendleClick}
       >
         upload

@@ -10,6 +10,9 @@ import {
   sendEmailVerification,
   updateEmail,
   updateProfile,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
@@ -34,8 +37,8 @@ export const UserContextProvider = ({ children }: any) => {
 
   const signUp = async ({ email, password }: UserCredential) => {
     await createUserWithEmailAndPassword(auth, email, password)
-    if (auth.currentUser) {
-      return sendEmailVerification(auth.currentUser)
+    if (user) {
+      return sendEmailVerification(user)
     }
   }
   const signIn = ({ email, password }: UserCredential) => {
@@ -66,6 +69,20 @@ export const UserContextProvider = ({ children }: any) => {
   const changeUsername = async (username: string) => {
     if (user) {
       return updateProfile(user, { displayName: username })
+    }
+  }
+
+  const changePassword = (oldPassword: string, newPassword: string) => {
+    if (user && user.email) {
+      const credentials = EmailAuthProvider.credential(user.email, oldPassword)
+      reauthenticateWithCredential(user, credentials)
+      return updatePassword(user, newPassword)
+    }
+  }
+
+  const sendVerify = () => {
+    if (user && user.emailVerified === false) {
+      return sendEmailVerification(user)
     }
   }
 
@@ -109,6 +126,8 @@ export const UserContextProvider = ({ children }: any) => {
         changeEmail,
         uploadUserPhoto,
         changeUsername,
+        sendVerify,
+        changePassword,
       }}
     >
       {children}
